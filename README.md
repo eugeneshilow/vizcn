@@ -32,18 +32,16 @@ agent can browse and install the catalog itself —
 | form | answers the question | family | when NOT to use |
 | --- | --- | --- | --- |
 | `bench-matrix` | How do these models compare across many benchmarks at once? | matrix | Trends over time or more than ~6 models — use a time-series form or a ranking board instead of a wide table. |
-| `bubble-field` | How do entities spread across two count dimensions, and which are the heavyweights? | matrix | Log-log count data spanning decades only — not linear data; skip it for narrow ranges, negative/zero values, or a single dimension. |
-| `distribution-bar` | How does the whole split into parts? | composition | Comparing values across multiple groups or over time — use a ranking bar list or time series instead; also avoid with many tiny segments that all fall below the label threshold. |
+| `delta-bars` | Who is ahead today, and by how much? | time-series | Not for more than 2 rivals or for absolute magnitudes — use race lines or stacked forms instead. |
+| `dumbbell-range` | How far apart are the two values per row, and who sits where? | ranking/comparison | Not for more than 2 points per row (use a range strip or box plot) and not for time series — use lines. |
 | `dune-flow` | What made up the flow over time, and when were the waves? | time-series | When readers must read exact values off the chart — the B-spline deliberately does not pass through the data points (raw values live only in the tooltip). |
 | `frontier-board` | Which model delivers the most score per dollar (or token), and at what effort level? | ranking | Needs >=2 runs per model to draw frontier lines; single-point-per-model data reads better as rank-bars. |
-| `pipeline-flow` | What are the stages of this process, and in what order does work flow? | illustration | Not for branching/looping flows or quantitative comparison between stages — no values are encoded. |
-| `race-lines` | Who is pulling ahead over time, and by how much on any given day? | time-series | Few data points (<8), many series (>6, tooltip and lines turn to spaghetti), or when only the latest value matters (use a ranking bar instead). |
-| `radar-profile` | Where does A beat B, and where does it lose? | matrix | Exactly 2 entities on a 0-100 scale only — not for 3+ overlapping shapes, unnormalized metrics, or precise value reading (use rank bars or a table). |
+| `heat-strip` | Is this thing alive — how did its activity move over the last year? | time-series | Not for exact value reading or short ranges (<12 weeks) — use a column chart instead. |
+| `leaderboard-table` | Who leads on score, with what confidence spread, and what does that score cost? | ranking | Wide-figure genre (min-width ~700px) — not for narrow containers or mobile cards; for a single metric without spread or economy columns, rank-bars is lighter. |
 | `rank-bars` | Who leads this ranking, and by how much? | ranking | Not for time series, part-to-whole composition, or more than ~10 rows — use a table or sparklines instead. |
 | `stacked-activity` | What makes up each day's volume, and how does it breathe day to day? | time-series | Comparing exact values of individual segments across days (inner segments have no common baseline) or fewer than 5 days. |
-| `tug-of-war` | Who wins where, head to head? | ranking | Not for 3+ contenders, absolute magnitudes, or trends over time — the rope only shows the relative split per row. |
-| `waffle-grid` | How big is this share of the whole, really? | composition | Not for comparing several shares, time trends, or non-percentage values — use rank bars or a distribution bar instead. |
-| `warming-stripes` | When was this field hot, and when was it cold? | time-series | Short ranges or continuous quantitative series — use a line or bar chart when exact magnitudes matter. |
+| `treemap` | How is the whole split up, and who dominates? | composition | Not for close values (areas are hard to compare precisely) or deep hierarchies (flat only) — use rank bars or a nested treemap library instead. |
+| `value-columns` | How do these few values stack up side by side? | ranking | Not for many items (>8) or time series — use rank bars or lines instead. |
 <!-- catalog:end -->
 
 ## Usage

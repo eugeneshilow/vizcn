@@ -1,0 +1,11 @@
+{
+  "name": "dumbbell-range",
+  "title": "Dumbbell Range",
+  "description": "Two endpoints per row joined by a connector on a shared zero-based scale — the dumbbell genre for paired values like min/max or input/output.",
+  "question": "How far apart are the two values per row, and who sits where?",
+  "family": "ranking/comparison",
+  "whenToUse": "Comparing a two-point range across a handful of named entities where both endpoints and the gap matter (price min/max, input/output cost, before/after scores).",
+  "antiUse": "Not for more than 2 points per row (use a range strip or box plot) and not for time series — use lines.",
+  "client": false,
+  "props": "rows: {label, lo, hi, highlight?}[]; maxValue?; unit? (default \"$\"); formatValue?; loLabel?/hiLabel? (legend, default \"lo\"/\"hi\"); caption?; loColor? (default seriesColor(0)); hiColor? (default seriesColor(5)); highlightColor? (default seriesColor(1))"
+}

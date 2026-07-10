@@ -28,16 +28,16 @@
       "description": "Vendor-announcement style benchmark board: benchmark rows grouped by domain vs model columns, with a tinted hero column and bold best-in-row plates."
     },
     {
-      "name": "bubble-field",
+      "name": "delta-bars",
       "type": "registry:component",
-      "title": "Bubble Field",
-      "description": "Bubble scatter on log-log axes — position for two counts, bubble area for a third, color for category."
+      "title": "Delta Bars",
+      "description": "Diverging daily delta ribbon for a pair of rivals — bars rise above the zero midline when A leads, drop below when B leads."
     },
     {
-      "name": "distribution-bar",
+      "name": "dumbbell-range",
       "type": "registry:component",
-      "title": "Distribution Bar",
-      "description": "Proportional stacked strip with in-segment labels and a share legend below."
+      "title": "Dumbbell Range",
+      "description": "Two endpoints per row joined by a connector on a shared zero-based scale — the dumbbell genre for paired values like min/max or input/output."
     },
     {
       "name": "dune-flow",
@@ -52,22 +52,16 @@
       "description": "Interactive score-vs-cost scatter where each model's effort levels connect into an efficiency frontier line, with metric/version toggles, model filter, and hover focus."
     },
     {
-      "name": "pipeline-flow",
+      "name": "heat-strip",
       "type": "registry:component",
-      "title": "Pipeline Flow",
-      "description": "Horizontal chain of stage boxes linked by animated marching-ants arrows."
+      "title": "Heat Strip",
+      "description": "A year of weekly activity as one strip of thin bars — numbers row above (total / peak / current week), per-week hover tooltip, intensity doubled by opacity."
     },
     {
-      "name": "race-lines",
+      "name": "leaderboard-table",
       "type": "registry:component",
-      "title": "Race Lines",
-      "description": "Multi-series activity line chart with crosshair, sorted tooltip, and draw-in animation."
-    },
-    {
-      "name": "radar-profile",
-      "type": "registry:component",
-      "title": "Radar Profile",
-      "description": "Two-entity radar (spider) chart — overlapping strength polygons over shared 0-100 axes with a legend."
+      "title": "Leaderboard Table",
+      "description": "Score bars with +/-std whiskers plus numeric economy columns (cost/tokens/steps), one row per model run, with version and Best/All-effort-levels toggles, model filter, and rank-morphing rows."
     },
     {
       "name": "rank-bars",
@@ -82,22 +76,16 @@
       "description": "Interactive stacked daily columns with a live legend that doubles as the tooltip; the last, incomplete day is hatched."
     },
     {
-      "name": "tug-of-war",
+      "name": "treemap",
       "type": "registry:component",
-      "title": "Tug of War",
-      "description": "Diverging duel bars: two contenders split a 100% rope per row; the brighter side is the winner."
+      "title": "Treemap",
+      "description": "Flat slice-and-dice treemap in N rows — tile area is proportional to each item's share of the total; tiles carry label, value, optional icon, badge, and link."
     },
     {
-      "name": "waffle-grid",
+      "name": "value-columns",
       "type": "registry:component",
-      "title": "Waffle Grid",
-      "description": "A 10x10 waffle grid rendering \"N of 100\" as countable filled cells with a bold readout and caption."
-    },
-    {
-      "name": "warming-stripes",
-      "type": "registry:component",
-      "title": "Warming Stripes",
-      "description": "Climate-stripes ribbon: one stripe per year, colored by era heat level on a sequential ramp."
+      "title": "Value Columns",
+      "description": "Plain vertical columns comparing magnitudes — value on top, zero-based column, label below — with an accent-highlighted hero column."
     }
   ]
 }

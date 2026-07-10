@@ -13,24 +13,24 @@
       "props": "models (id, label, vendor?, color?, hero? — hero color must be a 6-digit hex, tint is built by hex+alpha concat), groups (label + rows {bench, note?, values: (number|null)[], decimals?}), meta?, footnote?, decimals?=1, benchColLabel?='benchmark'"
     },
     {
-      "name": "bubble-field",
-      "install": "https://vibecoding.tech/vizcn/r/bubble-field.json",
-      "question": "How do entities spread across two count dimensions, and which are the heavyweights?",
-      "family": "matrix",
-      "whenToUse": "Positioning a dozen-odd named entities on two count metrics that span several orders of magnitude, with a third count as bubble size.",
-      "antiUse": "Log-log count data spanning decades only — not linear data; skip it for narrow ranges, negative/zero values, or a single dimension.",
+      "name": "delta-bars",
+      "install": "https://vibecoding.tech/vizcn/r/delta-bars.json",
+      "question": "Who is ahead today, and by how much?",
+      "family": "time-series",
+      "whenToUse": "Tracking the day-by-day lead between exactly two rivals where the sign and streaks of the gap matter more than absolute volumes (head-to-head races, A/B momentum).",
+      "antiUse": "Not for more than 2 rivals or for absolute magnitudes — use race lines or stacked forms instead.",
       "client": false,
-      "props": "points: {x, y, size, label, series, color?}[]; xLabel; yLabel; legendUnit? (color defaults to seriesColor by series index)"
+      "props": "a, b: {label, color?, values: (number|null)[]} (colors default to seriesColor(0)/seriesColor(1)); xLabels?: {frac, text}[]"
     },
     {
-      "name": "distribution-bar",
-      "install": "https://vibecoding.tech/vizcn/r/distribution-bar.json",
-      "question": "How does the whole split into parts?",
-      "family": "composition",
-      "whenToUse": "One flat categorical breakdown of a total (language mix, task mix, traffic sources) where shares matter more than absolute comparison.",
-      "antiUse": "Comparing values across multiple groups or over time — use a ranking bar list or time series instead; also avoid with many tiny segments that all fall below the label threshold.",
+      "name": "dumbbell-range",
+      "install": "https://vibecoding.tech/vizcn/r/dumbbell-range.json",
+      "question": "How far apart are the two values per row, and who sits where?",
+      "family": "ranking/comparison",
+      "whenToUse": "Comparing a two-point range across a handful of named entities where both endpoints and the gap matter (price min/max, input/output cost, before/after scores).",
+      "antiUse": "Not for more than 2 points per row (use a range strip or box plot) and not for time series — use lines.",
       "client": false,
-      "props": "segments: { label, value, color? }[] (color falls back to palette by index); unit?: string appended in tooltips"
+      "props": "rows: {label, lo, hi, highlight?}[]; maxValue?; unit? (default \"$\"); formatValue?; loLabel?/hiLabel? (legend, default \"lo\"/\"hi\"); caption?; loColor? (default seriesColor(0)); hiColor? (default seriesColor(5)); highlightColor? (default seriesColor(1))"
     },
     {
       "name": "dune-flow",
@@ -50,37 +50,27 @@
       "whenToUse": "Comparing models on a quality-vs-cost tradeoff when each model has multiple runs (effort levels / modes) that form a frontier.",
       "antiUse": "Needs >=2 runs per model to draw frontier lines; single-point-per-model data reads better as rank-bars.",
       "client": true,
-      "props": "title, versions[] (datasets of models with runs), metrics[] (X-axis toggles with tickPrefix/Suffix), yMax/yTickSuffix, subjectId highlight, UI label strings"
+      "props": "title, versions[] (datasets of models with runs), metrics[] (X-axis toggles with tickPrefix/Suffix), yMax/yTickSuffix, xAscending (two axis genres: default false = inverted, cheaper right, efficient corner up-right; true = conventional ascending, expensive right, efficient corner up-left), subjectId highlight, UI label strings"
     },
     {
-      "name": "pipeline-flow",
-      "install": "https://vibecoding.tech/vizcn/r/pipeline-flow.json",
-      "question": "What are the stages of this process, and in what order does work flow?",
-      "family": "illustration",
-      "whenToUse": "Explaining a linear multi-step process (ETL, CI, review pipeline) where order matters more than metrics.",
-      "antiUse": "Not for branching/looping flows or quantitative comparison between stages — no values are encoded.",
-      "client": false,
-      "props": "steps: {name, desc}[] ordered stages; accent?: string arrow color (default seriesColor(0))"
-    },
-    {
-      "name": "race-lines",
-      "install": "https://vibecoding.tech/vizcn/r/race-lines.json",
-      "question": "Who is pulling ahead over time, and by how much on any given day?",
+      "name": "heat-strip",
+      "install": "https://vibecoding.tech/vizcn/r/heat-strip.json",
+      "question": "Is this thing alive — how did its activity move over the last year?",
       "family": "time-series",
-      "whenToUse": "Daily/weekly activity or usage volumes for a handful of competing entities where per-date comparison matters.",
-      "antiUse": "Few data points (<8), many series (>6, tooltip and lines turn to spaghetti), or when only the latest value matters (use a ranking bar instead).",
-      "client": true,
-      "props": "days: ISO date strings; series: { label, values (number|null), color?, legendValue?, highlight? }[]; yLabel?: accessible label"
+      "whenToUse": "Liveness at a glance over a long window of weekly counts (repo activity, releases, posts) where the shape and recency matter more than exact values.",
+      "antiUse": "Not for exact value reading or short ranges (<12 weeks) — use a column chart instead.",
+      "client": false,
+      "props": "weeks: number[] (weekly counts, oldest first, newest last); color? (default var(--vz-good,#059669))"
     },
     {
-      "name": "radar-profile",
-      "install": "https://vibecoding.tech/vizcn/r/radar-profile.json",
-      "question": "Where does A beat B, and where does it lose?",
-      "family": "matrix",
-      "whenToUse": "Head-to-head profile of two entities across 4-8 comparable dimensions normalized to 0-100 (capability profiles, skill matchups).",
-      "antiUse": "Exactly 2 entities on a 0-100 scale only — not for 3+ overlapping shapes, unnormalized metrics, or precise value reading (use rank bars or a table).",
-      "client": false,
-      "props": "axes: string[]; a/b: {label, values: number[] (0-100 per axis), color? (defaults seriesColor(0)/(1))}"
+      "name": "leaderboard-table",
+      "install": "https://vibecoding.tech/vizcn/r/leaderboard-table.json",
+      "question": "Who leads on score, with what confidence spread, and what does that score cost?",
+      "family": "ranking",
+      "whenToUse": "Benchmark leaderboards where score alone is not enough: each run carries a spread (std) and economy metrics, and models have multiple effort levels worth comparing.",
+      "antiUse": "Wide-figure genre (min-width ~700px) — not for narrow containers or mobile cards; for a single metric without spread or economy columns, rank-bars is lighter.",
+      "client": true,
+      "props": "versions: {key, label, models: {id, color?, badge?, logoUrl?, runs: {variant?, score, std?, x}[]}[]}[] (same rail as frontier-board); columns: {key, label, prefix?, suffix?, decimals?}[]; meta?; footnote?; xMax?; scoreSuffix/scoreLabel/modelColLabel/bestLabel/allRunsLabel/modelsLabel/allLabel UI strings"
     },
     {
       "name": "rank-bars",
@@ -103,34 +93,24 @@
       "props": "days: ISO date strings; segments: {key,label,color,values[]} bottom-up; unit?; note?; partialLast?; partialNote?"
     },
     {
-      "name": "tug-of-war",
-      "install": "https://vibecoding.tech/vizcn/r/tug-of-war.json",
-      "question": "Who wins where, head to head?",
-      "family": "ranking",
-      "whenToUse": "Head-to-head comparison of exactly two entities across several arenas (benchmarks, markets, categories) where per-row winner and margin matter.",
-      "antiUse": "Not for 3+ contenders, absolute magnitudes, or trends over time — the rope only shows the relative split per row.",
-      "client": false,
-      "props": "left/right: {label, color?} (defaults seriesColor(0)/(1)); rows: {bench, leftValue, rightValue, date?}[]; footnote?"
-    },
-    {
-      "name": "waffle-grid",
-      "install": "https://vibecoding.tech/vizcn/r/waffle-grid.json",
-      "question": "How big is this share of the whole, really?",
+      "name": "treemap",
+      "install": "https://vibecoding.tech/vizcn/r/treemap.json",
+      "question": "How is the whole split up, and who dominates?",
       "family": "composition",
-      "whenToUse": "Making a single percentage feel tangible — one share of one whole, where counting units beats reading a number.",
-      "antiUse": "Not for comparing several shares, time trends, or non-percentage values — use rank bars or a distribution bar instead.",
+      "whenToUse": "Showing one full field at a glance where a few players clearly dominate — market share, install base, budget split — with roughly 5-15 items.",
+      "antiUse": "Not for close values (areas are hard to compare precisely) or deep hierarchies (flat only) — use rank bars or a nested treemap library instead.",
       "client": false,
-      "props": "value: number (0-100 cells filled); color? (default seriesColor(0)); caption: string"
+      "props": "items: {label, value, valueLabel?, sub?, href?, iconUrl?, badge?, color?, muted?}[]; rows? (default 2); rowHeight? (default 96); defaultColor? (default seriesColor(0))"
     },
     {
-      "name": "warming-stripes",
-      "install": "https://vibecoding.tech/vizcn/r/warming-stripes.json",
-      "question": "When was this field hot, and when was it cold?",
-      "family": "time-series",
-      "whenToUse": "Long multi-decade timelines where the story is alternating hot/cold eras, not exact values.",
-      "antiUse": "Short ranges or continuous quantitative series — use a line or bar chart when exact magnitudes matter.",
+      "name": "value-columns",
+      "install": "https://vibecoding.tech/vizcn/r/value-columns.json",
+      "question": "How do these few values stack up side by side?",
+      "family": "ranking",
+      "whenToUse": "Comparing one magnitude across a handful of named entities where side-by-side height reads instantly (tariffs, prices, counters).",
+      "antiUse": "Not for many items (>8) or time series — use rank bars or lines instead.",
       "client": false,
-      "props": "from/to year range; eras[{start,end,heat 0-3,label?}]; note?; colors? 4-step ramp override"
+      "props": "items: {label, value, valueLabel?, sub?, highlight?, color?}[]; height? (default 180); maxValue?; highlightColor? (default seriesColor(0))"
     }
   ]
 }

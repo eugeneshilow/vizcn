@@ -14,13 +14,16 @@
  * Sources never hardcode shelf URLs (injection invariant): forks edit
  * registry.config.json only.
  */
-import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs'
+import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
 
 const root = new URL('..', import.meta.url).pathname
 const cfg = JSON.parse(readFileSync(join(root, 'registry.config.json'), 'utf8'))
 const BASE = cfg.registryBase.replace(/\/$/, '')
 const outDir = join(root, 'r')
+// r/ — полностью производная папка: чистим перед сборкой, иначе JSON
+// удалённых форм переживают перекройку состава
+rmSync(outDir, { recursive: true, force: true })
 mkdirSync(outDir, { recursive: true })
 
 // ---- theme: parse --vz-* tokens out of theme.css ----

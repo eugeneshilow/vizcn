@@ -7,5 +7,5 @@
   "whenToUse": "Comparing models on a quality-vs-cost tradeoff when each model has multiple runs (effort levels / modes) that form a frontier.",
   "antiUse": "Needs >=2 runs per model to draw frontier lines; single-point-per-model data reads better as rank-bars.",
   "client": true,
-  "props": "title, versions[] (datasets of models with runs), metrics[] (X-axis toggles with tickPrefix/Suffix), yMax/yTickSuffix, subjectId highlight, UI label strings"
+  "props": "title, versions[] (datasets of models with runs), metrics[] (X-axis toggles with tickPrefix/Suffix), yMax/yTickSuffix, xAscending (two axis genres: default false = inverted, cheaper right, efficient corner up-right; true = conventional ascending, expensive right, efficient corner up-left), subjectId highlight, UI label strings"
 }

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "heat-strip",
+  "type": "registry:component",
+  "title": "Heat Strip",
+  "description": "A year of weekly activity as one strip of thin bars — numbers row above (total / peak / current week), per-week hover tooltip, intensity doubled by opacity.",
+  "registryDependencies": [
+    "https://vibecoding.tech/vizcn/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/heat-strip/heat-strip.tsx",
+      "content": "/**\n * HeatStrip — a year of weekly activity as one strip of thin bars.\n *\n * Answers \"is this alive?\" in half a second: one bar per week (oldest left,\n * newest right), bar height and opacity both scale with the count, so the\n * strip reads as a heat texture rather than a precise chart. A numbers row\n * above gives the three facts that matter (total / peak per week / current\n * week); hovering any bar shows its exact count and how many weeks ago it\n * was. CSS-only grow-in on mount (works from a server component, disabled\n * under reduced motion). Pure server component — div-based, zero client JS.\n *\n * Props:\n * - weeks: number[] — weekly counts, oldest first, newest last (typically 52).\n * - color?: string — bar color (default var(--vz-good, #059669)).\n */\n\nconst fmt = (n: number) => n.toLocaleString('en-US')\n\n/**\n * A year-strip of weekly activity: numbers row (total / peak / current),\n * then one thin bar per week with a per-week hover tooltip.\n */\nexport function HeatStrip({\n  weeks,\n  color = 'var(--vz-good,#059669)',\n}: {\n  weeks: number[]\n  color?: string\n}) {\n  const max = Math.max(...weeks, 1)\n  const total = weeks.reduce((sum, n) => sum + n, 0)\n  const last = weeks[weeks.length - 1] ?? 0\n  return (\n    <div>\n      <p className=\"mb-3 flex flex-wrap gap-x-6 gap-y-1 text-[12.5px] text-[var(--vz-text3,#5C5C5C)] [font-variant-numeric:tabular-nums]\">\n        <span>\n          total <strong className=\"font-semibold text-[var(--vz-ink,#111)]\">{fmt(total)}</strong>\n        </span>\n        <span>\n          peak <strong className=\"font-semibold text-[var(--vz-ink,#111)]\">{fmt(max)}</strong>\n          /wk\n        </span>\n        <span>\n          this week <strong className=\"font-semibold text-[var(--vz-ink,#111)]\">{fmt(last)}</strong>\n        </span>\n      </p>\n      <div className=\"flex items-end gap-[2px]\" style={{ height: 56 }}>\n        {weeks.map((count, i) => (\n          <div key={i} className=\"group relative flex h-full min-w-0 flex-1 items-end\">\n            <span\n              className=\"pointer-events-none absolute bottom-full left-1/2 z-10 mb-1.5 hidden -translate-x-1/2 whitespace-nowrap bg-[var(--vz-chip,#111)] px-2 py-1 font-mono text-[10.5px] text-[var(--vz-chip-ink,#fff)] group-hover:block\"\n              style={{ borderRadius: 2 }}\n            >\n              {fmt(count)} · {i === weeks.length - 1 ? 'now' : `−${weeks.length - 1 - i} wk`}\n            </span>\n            <div\n              className=\"vc-grow-y w-full transition-opacity duration-150 group-hover:!opacity-100\"\n              style={{\n                height: Math.max(3, (count / max) * 56),\n                backgroundColor: color,\n                opacity: 0.25 + 0.75 * (count / max),\n                borderRadius: '2px 2px 0 0',\n              }}\n            />\n          </div>\n        ))}\n      </div>\n      <div className=\"mt-1 flex justify-between font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--vz-muted,#8A8A8A)]\">\n        <span>−{weeks.length - 1} wk</span>\n        <span>now</span>\n      </div>\n    </div>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "components/vizcn/heat-strip.tsx"
+    }
+  ],
+  "meta": {
+    "question": "Is this thing alive — how did its activity move over the last year?",
+    "family": "time-series",
+    "whenToUse": "Liveness at a glance over a long window of weekly counts (repo activity, releases, posts) where the shape and recency matter more than exact values.",
+    "antiUse": "Not for exact value reading or short ranges (<12 weeks) — use a column chart instead."
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "heat-strip",
+  "title": "Heat Strip",
+  "description": "A year of weekly activity as one strip of thin bars — numbers row above (total / peak / current week), per-week hover tooltip, intensity doubled by opacity.",
+  "question": "Is this thing alive — how did its activity move over the last year?",
+  "family": "time-series",
+  "whenToUse": "Liveness at a glance over a long window of weekly counts (repo activity, releases, posts) where the shape and recency matter more than exact values.",
+  "antiUse": "Not for exact value reading or short ranges (<12 weeks) — use a column chart instead.",
+  "client": false,
+  "props": "weeks: number[] (weekly counts, oldest first, newest last); color? (default var(--vz-good,#059669))"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "delta-bars",
+  "title": "Delta Bars",
+  "description": "Diverging daily delta ribbon for a pair of rivals — bars rise above the zero midline when A leads, drop below when B leads.",
+  "question": "Who is ahead today, and by how much?",
+  "family": "time-series",
+  "whenToUse": "Tracking the day-by-day lead between exactly two rivals where the sign and streaks of the gap matter more than absolute volumes (head-to-head races, A/B momentum).",
+  "antiUse": "Not for more than 2 rivals or for absolute magnitudes — use race lines or stacked forms instead.",
+  "client": false,
+  "props": "a, b: {label, color?, values: (number|null)[]} (colors default to seriesColor(0)/seriesColor(1)); xLabels?: {frac, text}[]"
+}

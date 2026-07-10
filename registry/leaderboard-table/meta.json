@@ -1,0 +1,11 @@
+{
+  "name": "leaderboard-table",
+  "title": "Leaderboard Table",
+  "description": "Score bars with +/-std whiskers plus numeric economy columns (cost/tokens/steps), one row per model run, with version and Best/All-effort-levels toggles, model filter, and rank-morphing rows.",
+  "question": "Who leads on score, with what confidence spread, and what does that score cost?",
+  "family": "ranking",
+  "whenToUse": "Benchmark leaderboards where score alone is not enough: each run carries a spread (std) and economy metrics, and models have multiple effort levels worth comparing.",
+  "antiUse": "Wide-figure genre (min-width ~700px) — not for narrow containers or mobile cards; for a single metric without spread or economy columns, rank-bars is lighter.",
+  "client": true,
+  "props": "versions: {key, label, models: {id, color?, badge?, logoUrl?, runs: {variant?, score, std?, x}[]}[]}[] (same rail as frontier-board); columns: {key, label, prefix?, suffix?, decimals?}[]; meta?; footnote?; xMax?; scoreSuffix/scoreLabel/modelColLabel/bestLabel/allRunsLabel/modelsLabel/allLabel UI strings"
+}

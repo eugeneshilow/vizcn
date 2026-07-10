@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "delta-bars",
+  "type": "registry:component",
+  "title": "Delta Bars",
+  "description": "Diverging daily delta ribbon for a pair of rivals — bars rise above the zero midline when A leads, drop below when B leads.",
+  "registryDependencies": [
+    "https://vibecoding.tech/vizcn/r/theme.json",
+    "https://vibecoding.tech/vizcn/r/palette.json"
+  ],
+  "files": [
+    {
+      "path": "registry/delta-bars/delta-bars.tsx",
+      "content": "/**\n * DeltaBars — diverging daily delta ribbon for a PAIR of rivals.\n *\n * Answers \"who is ahead today, and by how much?\": for each day it draws one\n * bar of the daily difference (a − b) from a zero midline — up in A's color\n * when A leads, down in B's color when B leads. The eye reads streaks and\n * flips of the lead instantly; symmetric ±max scale computed from the data.\n * Pure server component — props → SVG, zero client JS.\n *\n * Props:\n * - a, b: DeltaSeries — the two rivals: { label, values (number|null per\n *   day, null = missing day, no bar), color? (defaults to seriesColor(0)\n *   and seriesColor(1)) }.\n * - xLabels?: { frac (0..1 across the plot), text }[] — x-axis captions.\n */\nimport { seriesColor } from \"@/lib/vizcn-palette\"\n\nexport type DeltaSeries = {\n  label: string\n  /** series hue; defaults to seriesColor(0) for a, seriesColor(1) for b */\n  color?: string\n  values: Array<number | null>\n}\n\nconst MUT = 'var(--vz-muted,#8A8A8A)'\nconst W = 720\nconst H = 240\nconst PAD = { t: 12, r: 16, b: 26, l: 44 }\n\n/** Clean axis ceiling: 1-2-2.5-5 × 10^k step targeting ~4-5 divisions. */\nfunction niceMax(raw: number): { max: number; step: number } {\n  const mag = 10 ** Math.floor(Math.log10(raw / 4))\n  const step = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((m) => m * 5 >= raw) ?? raw / 4\n  return { max: step * Math.ceil(raw / step), step }\n}\n\nfunction fmt(v: number): string {\n  if (v >= 1_000_000) return `${Math.round(v / 100_000) / 10}M`\n  if (v >= 1_000) return `${Math.round(v / 1_000)}K`\n  return String(Math.round(v))\n}\n\nexport function DeltaBars({\n  a,\n  b,\n  xLabels,\n}: {\n  a: DeltaSeries\n  b: DeltaSeries\n  xLabels?: Array<{ frac: number; text: string }>\n}) {\n  const colorA = a.color ?? seriesColor(0)\n  const colorB = b.color ?? seriesColor(1)\n  const n = a.values.length\n  const delta = Array.from({ length: n }, (_, i) =>\n    a.values[i] !== null && b.values[i] !== null\n      ? (a.values[i] as number) - (b.values[i] as number)\n      : null\n  )\n  const absMax = Math.max(...delta.map((d) => Math.abs(d ?? 0)), 1)\n  const { max } = niceMax(absMax)\n  const mid = H / 2\n  const plotW = W - PAD.l - PAD.r\n  const barW = Math.max(2, plotW / n - 2)\n  return (\n    <svg viewBox={`0 0 ${W} ${H}`} className=\"w-full\">\n      <line\n        x1={PAD.l}\n        x2={W - PAD.r}\n        y1={mid}\n        y2={mid}\n        stroke=\"var(--vz-axis,#D9D9D9)\"\n        strokeWidth=\"1\"\n      />\n      <text x={PAD.l - 8} y={16} textAnchor=\"end\" fontSize=\"11\" fill={MUT}>\n        +{fmt(max)}\n      </text>\n      <text x={PAD.l - 8} y={H - 22} textAnchor=\"end\" fontSize=\"11\" fill={MUT}>\n        −{fmt(max)}\n      </text>\n      {delta.map((d, i) => {\n        if (d === null) return null\n        const hh = (Math.abs(d) / max) * (mid - 24)\n        return (\n          <rect\n            key={i}\n            className={d >= 0 ? 'vc-grow-y' : 'vc-grow-y-down'}\n            x={PAD.l + (i / n) * plotW}\n            y={d >= 0 ? mid - hh : mid}\n            width={barW}\n            height={Math.max(1.5, hh)}\n            rx=\"2\"\n            fill={d >= 0 ? colorA : colorB}\n          >\n            <title>{`${d >= 0 ? a.label : b.label} ahead by ${fmt(Math.abs(d))}`}</title>\n          </rect>\n        )\n      })}\n      {xLabels?.map((l) => (\n        <text\n          key={l.text}\n          x={PAD.l + l.frac * plotW}\n          y={H - 6}\n          textAnchor=\"middle\"\n          fontSize=\"11\"\n          fill={MUT}\n        >\n          {l.text}\n        </text>\n      ))}\n      <text x={W - PAD.r} y={16} textAnchor=\"end\" fontSize=\"11.5\" fontWeight=\"650\" fill={colorA}>\n        ▲ {a.label} ahead\n      </text>\n      <text\n        x={W - PAD.r}\n        y={H - 22}\n        textAnchor=\"end\"\n        fontSize=\"11.5\"\n        fontWeight=\"650\"\n        fill={colorB}\n      >\n        ▼ {b.label} ahead\n      </text>\n    </svg>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "components/vizcn/delta-bars.tsx"
+    }
+  ],
+  "meta": {
+    "question": "Who is ahead today, and by how much?",
+    "family": "time-series",
+    "whenToUse": "Tracking the day-by-day lead between exactly two rivals where the sign and streaks of the gap matter more than absolute volumes (head-to-head races, A/B momentum).",
+    "antiUse": "Not for more than 2 rivals or for absolute magnitudes — use race lines or stacked forms instead."
+  }
+}

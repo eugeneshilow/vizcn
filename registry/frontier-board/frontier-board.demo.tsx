@@ -4,6 +4,8 @@ import type { FrontierModel } from './frontier-board'
 /**
  * Demo: five models on a score x cost frontier, two dataset versions
  * (toggle to see the morph) and two X metrics. Deterministic neutral data.
+ * AADemo shows the second axis genre (xAscending: expensive to the right,
+ * efficient corner up-and-left).
  */
 
 const MODELS_V1: FrontierModel[] = [
@@ -92,6 +94,20 @@ export default function FrontierBoardDemo() {
         { key: 'cost', label: 'Price', axisLabel: 'Avg cost per task', tickPrefix: '$' },
         { key: 'tokens', label: 'Tokens', axisLabel: 'Avg output tokens per task, k', tickSuffix: 'k' },
       ]}
+    />
+  )
+}
+
+/** Second axis genre: ascending cost axis (expensive right, efficient corner ↖). */
+export function AADemo() {
+  return (
+    <FrontierBoard
+      title="Agentic coding score"
+      meta="120 tasks · updated Jun 12, 2026"
+      subjectId="atlas-4"
+      xAscending
+      versions={[{ key: 'v2', label: 'v1.1', models: MODELS_V2 }]}
+      metrics={[{ key: 'cost', label: 'Price', axisLabel: 'Avg cost per task', tickPrefix: '$' }]}
     />
   )
 }

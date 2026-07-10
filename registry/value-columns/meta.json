@@ -1,0 +1,11 @@
+{
+  "name": "value-columns",
+  "title": "Value Columns",
+  "description": "Plain vertical columns comparing magnitudes — value on top, zero-based column, label below — with an accent-highlighted hero column.",
+  "question": "How do these few values stack up side by side?",
+  "family": "ranking",
+  "whenToUse": "Comparing one magnitude across a handful of named entities where side-by-side height reads instantly (tariffs, prices, counters).",
+  "antiUse": "Not for many items (>8) or time series — use rank bars or lines instead.",
+  "client": false,
+  "props": "items: {label, value, valueLabel?, sub?, highlight?, color?}[]; height? (default 180); maxValue?; highlightColor? (default seriesColor(0))"
+}

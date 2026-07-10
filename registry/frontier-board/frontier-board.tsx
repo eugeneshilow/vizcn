@@ -9,10 +9,16 @@ import { seriesColor } from '../../lib/palette'
  * frontier line. Answers the 2-second question: "which model gives the most
  * score per dollar/token, and at what effort level?"
  *
- * The X axis is INVERTED (cheaper is to the right), so up-and-right is
- * strictly better. Series labels are colored like their line; toggles switch
- * the X metric and the dataset version; a dropdown filters models; hovering
- * a point or line focuses that series and shows a tooltip.
+ * The X axis supports two genres. Default (xAscending=false): the axis is
+ * INVERTED — cheaper is to the right, so up-and-right is strictly better
+ * (corner note "more efficient ↗"). With xAscending=true the scale runs the
+ * conventional way — more expensive to the right — so the efficient corner
+ * is up-and-left ("more efficient ↖"), as on cost-axis leaderboards that
+ * keep cost ascending. Only the scale direction and the corner note move;
+ * all other mechanics are shared. Series labels are colored like their
+ * line; toggles switch the X metric and the dataset version; a dropdown
+ * filters models; hovering a point or line focuses that series and shows a
+ * tooltip.
  *
  * Motion: switching metric/version morphs points (transform) and lines
  * (CSS transition of the `d` property; browsers without support just jump
@@ -25,6 +31,9 @@ import { seriesColor } from '../../lib/palette'
  * - versions: >=1 dataset versions (toggle buttons hidden when only one)
  * - metrics: >=1 X-axis metrics (toggle buttons hidden when only one)
  * - yMax / yTickSuffix: Y-axis ceiling and tick suffix (default '%')
+ * - xAscending: flip the X axis to conventional ascending (expensive right,
+ *   efficient corner ↖); default false keeps the inverted genre (cheap
+ *   right, efficient corner ↗)
  * - subjectId: id of the page's subject series — drawn bolder while
  *   nothing is hovered
  * - meta / efficientNote / modelsLabel / allLabel / defaultNote: UI strings
@@ -132,7 +141,8 @@ export function FrontierBoard({
   metrics,
   yMax: yMaxProp,
   yTickSuffix = '%',
-  efficientNote = 'more efficient ↗',
+  xAscending = false,
+  efficientNote,
   modelsLabel = 'Models',
   allLabel = 'all',
   defaultNote = 'default',
@@ -149,7 +159,10 @@ export function FrontierBoard({
   /** Y-axis ceiling; defaults to a clean step above the data maximum */
   yMax?: number
   yTickSuffix?: string
-  /** italic note in the top-right corner of the plot */
+  /** flip the X axis to conventional ascending: more expensive to the right
+   * (default false — inverted genre, cheaper to the right) */
+  xAscending?: boolean
+  /** italic corner note; defaults to 'more efficient ↗/↖' per axis genre */
   efficientNote?: string
   modelsLabel?: string
   allLabel?: string
@@ -212,7 +225,9 @@ export function FrontierBoard({
     return { xEnd, xStep, yTop, yStep }
   }, [visible, metric.key, yMaxProp])
 
-  const sx = (x: number) => r2(PAD.left + (1 - x / geometry.xEnd) * PLOT_W)
+  const sx = (x: number) =>
+    r2(PAD.left + (xAscending ? x / geometry.xEnd : 1 - x / geometry.xEnd) * PLOT_W)
+  const effNote = efficientNote ?? (xAscending ? 'more efficient ↖' : 'more efficient ↗')
   const sy = (y: number) => r2(PAD.top + (1 - y / geometry.yTop) * PLOT_H)
   const fmt = (v: number) =>
     `${metric.tickPrefix ?? ''}${Number.isInteger(v) ? v : r2(v)}${metric.tickSuffix ?? ''}`
@@ -342,15 +357,17 @@ export function FrontierBoard({
           >
             {title}
           </text>
+          {/* the efficiency corner follows the axis genre: cheap+high sits
+              top-right ↗ on the inverted axis, top-left ↖ when ascending */}
           <text
-            x={W - PAD.right - 12}
+            x={xAscending ? PAD.left + 12 : W - PAD.right - 12}
             y={PAD.top + 22}
-            textAnchor="end"
+            textAnchor={xAscending ? 'start' : 'end'}
             fontSize="13"
             fontStyle="italic"
             fill="var(--vz-muted,#8A8A8A)"
           >
-            {efficientNote}
+            {effNote}
           </text>
 
           {/* grid + ticks */}
