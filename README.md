@@ -62,3 +62,6 @@ registry is a byproduct of a production system, not a product team.
 Built by [Evgeny Shilov](https://github.com/eugeneshilow) ·
 [@eugeneshilow](https://x.com/eugeneshilow) · next drops:
 [vibecoding.tech/vizcn](https://vibecoding.tech/vizcn)
+
+Not affiliated with [shadcn](https://ui.shadcn.com) — vizcn is an
+independent registry that follows the shadcn registry spec.
