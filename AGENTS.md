@@ -17,7 +17,7 @@ forms; your job is **selection, not invention**.
 
 ## Install
 
-Prerequisite: a shadcn-initialized project (`npx shadcn@latest init -y`).
+Prerequisite: a shadcn-initialized project (`npx shadcn@latest init -d`).
 
 ```bash
 npx shadcn@latest add https://vibecoding.tech/vizcn/r/<name>.json -y
