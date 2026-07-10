@@ -1,0 +1,20 @@
+{
+  "name": "vizcn",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Agent-first SVG viz registry — copy-paste forms an AI agent assembles from a catalog. No chart lib.",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "registry:build": "node scripts/build-registry.mjs"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.7.2"
+  }
+}

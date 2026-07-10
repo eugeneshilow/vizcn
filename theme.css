@@ -1,0 +1,56 @@
+/*
+ * vizcn theme — structural tokens for every form.
+ *
+ * Contract: ALL vizcn variables are namespaced --vz-*. We never define
+ * standard shadcn names (--background, --primary, --chart-*): installing a
+ * vizcn form must never repaint the consumer's app. Forms read colors as
+ * var(--vz-*, fallback) — light values double as fallbacks, so forms render
+ * correctly even if this file never loads.
+ *
+ * The registry ships these tokens as cssVars on the `theme` item; forms
+ * depend on it via registryDependencies, so `npx shadcn add` injects them
+ * automatically. Manual setup: copy this file into your global CSS.
+ *
+ * Dark tone: wrap a subtree in .vz-dark; .vz-scene is a near-black hero
+ * stage. Swap values to re-skin every form at once.
+ */
+:root {
+  --vz-surface: #ffffff;
+  --vz-frame: #e3e3e3;
+  --vz-grid: #ededed;
+  --vz-axis: #d9d9d9;
+  --vz-track: #f5f5f4;
+  --vz-ink: #111111;
+  --vz-text2: #3a3a3a;
+  --vz-text3: #5c5c5c;
+  --vz-muted: #8a8a8a;
+  --vz-muted2: #9c9c9c;
+  --vz-chip: #111111;
+  --vz-chip-ink: #ffffff;
+  --vz-ring: #ffffff;
+  --vz-hover: #f7f7f6;
+  /* semantic status scale — verdict by magnitude */
+  --vz-good: #059669;
+  --vz-mid: #d97706;
+  --vz-bad: #dc2626;
+}
+.vz-dark {
+  --vz-surface: #0e0e11;
+  --vz-frame: #26262b;
+  --vz-grid: #1e1e23;
+  --vz-axis: #3d3d44;
+  --vz-track: #1a1a1f;
+  --vz-ink: #f2f2f0;
+  --vz-text2: #c9c9c5;
+  --vz-text3: #a3a39f;
+  --vz-muted: #8c8c8a;
+  --vz-muted2: #7e7e7c;
+  --vz-chip: #f2f2f0;
+  --vz-chip-ink: #111111;
+  --vz-ring: #0e0e11;
+  --vz-hover: #16161a;
+  color-scheme: dark;
+}
+.vz-scene {
+  background: #0a0a0a;
+}
