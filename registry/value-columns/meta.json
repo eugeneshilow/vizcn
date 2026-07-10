@@ -6,6 +6,6 @@
   "family": "ranking",
   "whenToUse": "Comparing one magnitude across a handful of named entities where side-by-side height reads instantly (tariffs, prices, counters).",
   "antiUse": "Not for many items (>8) or time series — use rank bars or lines instead.",
-  "client": false,
+  "client": true,
   "props": "items: {label, value, valueLabel?, sub?, highlight?, color?}[]; height? (default 180); maxValue?; highlightColor? (default seriesColor(0))"
 }

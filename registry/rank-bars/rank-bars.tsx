@@ -1,11 +1,14 @@
+'use client'
+
 /**
  * RankBarChart — horizontal ranking bars: label · bar · value.
  *
  * Answers "who leads, by how much?" in 2 seconds: rows sorted by the caller,
  * bars scaled from zero to the max value of the list (or an explicit
  * maxValue), the hero row highlighted in an accent color with bold text.
- * Leaderboard genre: clean data rows, no chart chrome. Pure server
- * component — div-based, zero client JS.
+ * Leaderboard genre: clean data rows, no chart chrome. Client component only
+ * for the viewport-entry animation (IntersectionObserver); rendering itself
+ * is plain divs.
  *
  * Props:
  * - items: RankBarItem[] — label, value, optional valueLabel / sub /
@@ -15,6 +18,7 @@
  * - highlightColor?: string — bar color for highlighted rows
  *   (default: seriesColor(0)).
  */
+import { useEffect, useRef, useState } from 'react'
 import { seriesColor } from '../../lib/palette'
 
 const BAR_DEFAULT = 'var(--vz-axis,#D9D9D9)'
@@ -47,16 +51,39 @@ export function RankBarChart({
   unit?: string
   highlightColor?: string
 }) {
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const [entered, setEntered] = useState(false)
+
+  useEffect(() => {
+    const node = wrapRef.current
+    if (!node || typeof IntersectionObserver === 'undefined') {
+      setEntered(true)
+      return
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setEntered(true)
+          io.disconnect()
+        }
+      },
+      { threshold: 0.25 }
+    )
+    io.observe(node)
+    return () => io.disconnect()
+  }, [])
+
   const max = maxValue ?? Math.max(...items.map((item) => item.value), 1)
   return (
-    <div className="vc-focus space-y-3">
-      {items.map((item) => {
+    <div ref={wrapRef} className={`vc-focus space-y-3 ${entered ? 'vrb-in' : ''}`}>
+      {items.map((item, index) => {
         const width = Math.max(2, Math.round((item.value / max) * 100))
         const color = item.highlight ? highlightColor : (item.color ?? BAR_DEFAULT)
         return (
           <div
             key={item.label}
             className="grid grid-cols-[minmax(0,200px)_minmax(0,1fr)_72px] items-center gap-4"
+            style={{ '--i': index } as React.CSSProperties}
           >
             <div className="min-w-0">
               <p
@@ -75,7 +102,7 @@ export function RankBarChart({
               title={`${item.label} · ${item.valueLabel ?? item.value}`}
             >
               <div
-                className="vc-grow-x h-full"
+                className="vrb-bar h-full"
                 style={{
                   width: `${width}%`,
                   backgroundColor: color,
@@ -84,13 +111,31 @@ export function RankBarChart({
               />
             </div>
             <p
-              className={`text-right text-[13px] tabular-nums ${item.highlight ? 'font-bold text-[var(--vz-ink,#111)]' : 'font-medium text-[var(--vz-text3,#5C5C5C)]'}`}
+              className={`vrb-val text-right text-[13px] tabular-nums ${item.highlight ? 'font-bold text-[var(--vz-ink,#111)]' : 'font-medium text-[var(--vz-text3,#5C5C5C)]'}`}
             >
               {item.valueLabel ?? `${item.value}${unit}`}
             </p>
           </div>
         )
       })}
+
+      {/* Bars grow from the left on viewport entry, values fade in after; off under prefers-reduced-motion */}
+      <style>{`
+        .vrb-in .vrb-bar {
+          transform-origin: left;
+          animation: vrb-grow 0.7s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+          animation-delay: calc(var(--i) * 35ms);
+        }
+        .vrb-in .vrb-val {
+          animation: vrb-fade 0.6s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+          animation-delay: calc(var(--i) * 35ms + 150ms);
+        }
+        @keyframes vrb-grow { from { transform: scaleX(0); } }
+        @keyframes vrb-fade { from { opacity: 0; transform: translateY(4px); } }
+        @media (prefers-reduced-motion: reduce) {
+          .vrb-in .vrb-bar, .vrb-in .vrb-val { animation: none; }
+        }
+      `}</style>
     </div>
   )
 }

@@ -19,7 +19,7 @@
       "family": "time-series",
       "whenToUse": "Tracking the day-by-day lead between exactly two rivals where the sign and streaks of the gap matter more than absolute volumes (head-to-head races, A/B momentum).",
       "antiUse": "Not for more than 2 rivals or for absolute magnitudes — use race lines or stacked forms instead.",
-      "client": false,
+      "client": true,
       "props": "a, b: {label, color?, values: (number|null)[]} (colors default to seriesColor(0)/seriesColor(1)); xLabels?: {frac, text}[]"
     },
     {
@@ -29,7 +29,7 @@
       "family": "ranking/comparison",
       "whenToUse": "Comparing a two-point range across a handful of named entities where both endpoints and the gap matter (price min/max, input/output cost, before/after scores).",
       "antiUse": "Not for more than 2 points per row (use a range strip or box plot) and not for time series — use lines.",
-      "client": false,
+      "client": true,
       "props": "rows: {label, lo, hi, highlight?}[]; maxValue?; unit? (default \"$\"); formatValue?; loLabel?/hiLabel? (legend, default \"lo\"/\"hi\"); caption?; loColor? (default seriesColor(0)); hiColor? (default seriesColor(5)); highlightColor? (default seriesColor(1))"
     },
     {
@@ -59,7 +59,7 @@
       "family": "time-series",
       "whenToUse": "Liveness at a glance over a long window of weekly counts (repo activity, releases, posts) where the shape and recency matter more than exact values.",
       "antiUse": "Not for exact value reading or short ranges (<12 weeks) — use a column chart instead.",
-      "client": false,
+      "client": true,
       "props": "weeks: number[] (weekly counts, oldest first, newest last); color? (default var(--vz-good,#059669))"
     },
     {
@@ -79,7 +79,7 @@
       "family": "ranking",
       "whenToUse": "Comparing one metric across a handful of named entities where order and gaps matter (leaderboards, price ladders).",
       "antiUse": "Not for time series, part-to-whole composition, or more than ~10 rows — use a table or sparklines instead.",
-      "client": false,
+      "client": true,
       "props": "items: {label, value, valueLabel?, sub?, highlight?, color?}[]; maxValue?; unit?; highlightColor? (default seriesColor(0))"
     },
     {
@@ -99,7 +99,7 @@
       "family": "composition",
       "whenToUse": "Showing one full field at a glance where a few players clearly dominate — market share, install base, budget split — with roughly 5-15 items.",
       "antiUse": "Not for close values (areas are hard to compare precisely) or deep hierarchies (flat only) — use rank bars or a nested treemap library instead.",
-      "client": false,
+      "client": true,
       "props": "items: {label, value, valueLabel?, sub?, href?, iconUrl?, badge?, color?, muted?}[]; rows? (default 2); rowHeight? (default 96); defaultColor? (default seriesColor(0))"
     },
     {
@@ -109,7 +109,7 @@
       "family": "ranking",
       "whenToUse": "Comparing one magnitude across a handful of named entities where side-by-side height reads instantly (tariffs, prices, counters).",
       "antiUse": "Not for many items (>8) or time series — use rank bars or lines instead.",
-      "client": false,
+      "client": true,
       "props": "items: {label, value, valueLabel?, sub?, highlight?, color?}[]; height? (default 180); maxValue?; highlightColor? (default seriesColor(0))"
     }
   ]

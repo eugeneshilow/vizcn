@@ -1,13 +1,12 @@
 import { FrontierBoard } from './frontier-board'
 import type { FrontierModel, FrontierRun } from './frontier-board'
+import { seriesColor } from '../../lib/palette'
 
 /**
- * Demo: REAL data — DeepSWE leaderboard snapshot (Jul 1, 2026), 10 models
- * with effort-level runs across two dataset versions. Benchmark scores are
- * facts; vendor colors identify the vendors (color follows the entity).
- * Best runs carry exact leaderboard values; tokens/steps for other runs are
- * derived deterministically from cost. AADemo = the same board with the
- * conventional ascending axis (Artificial Analysis genre).
+ * Demo: fictional models with real-leaderboard density — 10 models across
+ * five fictional vendors, effort-level runs (minimal→max), two dataset
+ * versions, labeled defaults. Values mirror the density of real coding
+ * leaderboards; every name is invented. Deterministic data.
  */
 
 const fr = (
@@ -33,9 +32,9 @@ const fr = (
 
 const V11: FrontierModel[] = [
   {
-    id: 'claude-fable-5',
-    color: '#E8734A',
-    badge: 'A',
+    id: 'atlas-4',
+    color: seriesColor(0),
+    badge: 'M',
     runs: [
       fr('max', 21.63, 70.4, { std: 4, x: { tokens: 119, steps: 88 } }),
       fr('high', 13.4, 70, { labeled: true, isDefault: true, labelDx: -14, labelDy: 44 }),
@@ -45,21 +44,21 @@ const V11: FrontierModel[] = [
     ],
   },
   {
-    id: 'claude-opus-4.8',
-    color: '#E8734A',
-    badge: 'A',
+    id: 'atlas-3.5',
+    color: seriesColor(0),
+    badge: 'M',
     runs: [
       fr('max', 13.22, 59.1, { x: { tokens: 135, steps: 120 } }),
       fr('xhigh', 8.0, 54.3),
-      fr('high', 4.3, 51.7, { labeled: true, isDefault: true, labelDx: 12, labelDy: 6 }),
+      fr('high', 4.3, 51.7, { labeled: true, isDefault: true, labelDx: 6, labelDy: 42 }),
       fr('medium', 3.5, 48.6),
       fr('low', 2.7, 40.8),
     ],
   },
   {
-    id: 'claude-sonnet-5',
-    color: '#E8734A',
-    badge: 'A',
+    id: 'atlas-3',
+    color: seriesColor(0),
+    badge: 'M',
     runs: [
       fr('max', 26.4, 54, {
         labeled: true,
@@ -74,15 +73,15 @@ const V11: FrontierModel[] = [
     ],
   },
   {
-    id: 'claude-sonnet-4.6',
-    color: '#E8734A',
-    badge: 'A',
+    id: 'atlas-2',
+    color: seriesColor(0),
+    badge: 'M',
     runs: [fr('high', 5.52, 30.2, { labeled: true, std: 4, x: { tokens: 76, steps: 134 } })],
   },
   {
-    id: 'gpt-5.5',
-    color: '#10A37F',
-    badge: 'O',
+    id: 'nova-5',
+    color: seriesColor(1),
+    badge: 'H',
     runs: [
       fr('xhigh', 7.23, 67.1, { std: 6, x: { tokens: 46, steps: 82 } }),
       fr('high', 4.9, 64.4),
@@ -91,36 +90,36 @@ const V11: FrontierModel[] = [
     ],
   },
   {
-    id: 'gpt-5.4',
-    color: '#10A37F',
-    badge: 'O',
-    runs: [fr('xhigh', 5.65, 51.7, { labeled: true, x: { tokens: 71, steps: 70 } })],
+    id: 'nova-4',
+    color: seriesColor(1),
+    badge: 'H',
+    runs: [fr('xhigh', 5.65, 51.7, { labeled: true, labelDx: 16, labelDy: 20, x: { tokens: 71, steps: 70 } })],
   },
   {
-    id: 'glm-5.2',
-    color: '#087F8C',
-    badge: 'Z',
+    id: 'orion-72b',
+    color: seriesColor(2),
+    badge: 'V',
     runs: [
       fr('max', 3.92, 43.7, { labeled: true, isDefault: true, x: { tokens: 78, steps: 129 } }),
       fr('high', 2.9, 36.3),
     ],
   },
   {
-    id: 'gemini-3.5-flash',
-    color: '#4285F4',
-    badge: 'G',
+    id: 'vega-flash',
+    color: seriesColor(3),
+    badge: 'S',
     runs: [fr('medium', 7.34, 37.2, { labeled: true, x: { tokens: 276, steps: 86 } })],
   },
   {
-    id: 'gemini-3.1-pro',
-    color: '#4285F4',
-    badge: 'G',
+    id: 'vega-pro',
+    color: seriesColor(3),
+    badge: 'S',
     runs: [fr('high', 9.48, 11.8, { labeled: true, labelDx: 14, x: { tokens: 196, steps: 81 } })],
   },
   {
-    id: 'kimi-k2.7-code',
-    color: '#D64550',
-    badge: 'K',
+    id: 'quasar-coder',
+    color: seriesColor(5),
+    badge: 'Q',
     runs: [
       fr(undefined, 2.82, 30.7, {
         labeled: true,
@@ -135,7 +134,7 @@ const V11: FrontierModel[] = [
 
 /** v1 — the previous snapshot: a notch lower and cheaper, two models fewer. */
 const V1: FrontierModel[] = V11.filter(
-  (m) => m.id !== 'glm-5.2' && m.id !== 'kimi-k2.7-code',
+  (m) => m.id !== 'orion-72b' && m.id !== 'quasar-coder',
 ).map((m) => ({
   ...m,
   runs: m.runs.map((run) => ({
@@ -164,11 +163,11 @@ const METRICS = [
 export default function FrontierBoardDemo() {
   return (
     <FrontierBoard
-      title="DeepSWE score"
+      title="Agentic coding score"
       versions={VERSIONS}
       metrics={METRICS}
       yMax={80}
-      meta="113 tasks · updated Jul 1, 2026 · data: DeepSWE leaderboard"
+      meta="113 tasks · updated Jul 1, 2026"
       xAscending
     />
   )
@@ -178,11 +177,11 @@ export default function FrontierBoardDemo() {
 export function InvertedDemo() {
   return (
     <FrontierBoard
-      title="DeepSWE score"
+      title="Agentic coding score"
       versions={VERSIONS}
       metrics={METRICS}
       yMax={80}
-      meta="113 tasks · updated Jul 1, 2026 · data: DeepSWE leaderboard"
+      meta="113 tasks · updated Jul 1, 2026"
     />
   )
 }

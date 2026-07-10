@@ -6,6 +6,6 @@
   "family": "composition",
   "whenToUse": "Showing one full field at a glance where a few players clearly dominate — market share, install base, budget split — with roughly 5-15 items.",
   "antiUse": "Not for close values (areas are hard to compare precisely) or deep hierarchies (flat only) — use rank bars or a nested treemap library instead.",
-  "client": false,
+  "client": true,
   "props": "items: {label, value, valueLabel?, sub?, href?, iconUrl?, badge?, color?, muted?}[]; rows? (default 2); rowHeight? (default 96); defaultColor? (default seriesColor(0))"
 }

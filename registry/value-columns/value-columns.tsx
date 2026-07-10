@@ -1,3 +1,5 @@
+'use client'
+
 /**
  * ColumnChart — plain vertical columns comparing magnitudes.
  *
@@ -5,7 +7,8 @@
  * tariffs/prices genre: value on top, zero-based column, label (and an
  * optional muted sub line) below. Columns scale from zero to the max value
  * of the list (or an explicit maxValue); the hero column gets the accent
- * color and a bold value. Pure server component — div-based, zero client JS.
+ * color and a bold value. Client component only for the viewport-entry
+ * animation (IntersectionObserver); rendering itself is plain divs.
  *
  * Props:
  * - items: RankBarItem[] — label, value, optional valueLabel / sub /
@@ -16,6 +19,7 @@
  * - highlightColor?: string — column color for highlighted items
  *   (default: seriesColor(0)).
  */
+import { useEffect, useRef, useState } from 'react'
 import { seriesColor } from '../../lib/palette'
 
 const COLUMN_DEFAULT = 'var(--vz-ink,#111)'
@@ -48,21 +52,51 @@ export function ColumnChart({
   maxValue?: number
   highlightColor?: string
 }) {
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const [entered, setEntered] = useState(false)
+
+  useEffect(() => {
+    const node = wrapRef.current
+    if (!node || typeof IntersectionObserver === 'undefined') {
+      setEntered(true)
+      return
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setEntered(true)
+          io.disconnect()
+        }
+      },
+      { threshold: 0.25 }
+    )
+    io.observe(node)
+    return () => io.disconnect()
+  }, [])
+
   const max = maxValue ?? Math.max(...items.map((item) => item.value), 1)
   return (
-    <div className="flex items-end gap-6" style={{ height: height + 56 }}>
-      {items.map((item) => {
+    <div
+      ref={wrapRef}
+      className={`flex items-end gap-6 ${entered ? 'vlc-in' : ''}`}
+      style={{ height: height + 56 }}
+    >
+      {items.map((item, index) => {
         const h = Math.max(8, Math.round((item.value / max) * height))
         const color = item.highlight ? highlightColor : (item.color ?? COLUMN_DEFAULT)
         return (
-          <div key={item.label} className="flex min-w-0 flex-1 flex-col items-center justify-end">
+          <div
+            key={item.label}
+            className="flex min-w-0 flex-1 flex-col items-center justify-end"
+            style={{ '--i': index } as React.CSSProperties}
+          >
             <p
-              className={`mb-1.5 text-[13px] tabular-nums text-[var(--vz-ink,#111)] ${item.highlight ? 'font-bold' : 'font-semibold'}`}
+              className={`vlc-val mb-1.5 text-[13px] tabular-nums text-[var(--vz-ink,#111)] ${item.highlight ? 'font-bold' : 'font-semibold'}`}
             >
               {item.valueLabel ?? item.value}
             </p>
             <div
-              className="vc-grow-y w-full max-w-[88px]"
+              className="vlc-col w-full max-w-[88px]"
               title={`${item.label} · ${item.valueLabel ?? item.value}`}
               style={{ height: h, backgroundColor: color, borderRadius: '4px 4px 0 0' }}
             />
@@ -77,6 +111,24 @@ export function ColumnChart({
           </div>
         )
       })}
+
+      {/* Columns grow from the baseline on viewport entry, values fade in after; off under prefers-reduced-motion */}
+      <style>{`
+        .vlc-in .vlc-col {
+          transform-origin: bottom;
+          animation: vlc-grow 0.7s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+          animation-delay: calc(var(--i) * 35ms);
+        }
+        .vlc-in .vlc-val {
+          animation: vlc-fade 0.6s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+          animation-delay: calc(var(--i) * 35ms + 200ms);
+        }
+        @keyframes vlc-grow { from { transform: scaleY(0); } }
+        @keyframes vlc-fade { from { opacity: 0; transform: translateY(4px); } }
+        @media (prefers-reduced-motion: reduce) {
+          .vlc-in .vlc-col, .vlc-in .vlc-val { animation: none; }
+        }
+      `}</style>
     </div>
   )
 }

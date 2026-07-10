@@ -6,6 +6,6 @@
   "family": "ranking",
   "whenToUse": "Comparing one metric across a handful of named entities where order and gaps matter (leaderboards, price ladders).",
   "antiUse": "Not for time series, part-to-whole composition, or more than ~10 rows — use a table or sparklines instead.",
-  "client": false,
+  "client": true,
   "props": "items: {label, value, valueLabel?, sub?, highlight?, color?}[]; maxValue?; unit?; highlightColor? (default seriesColor(0))"
 }

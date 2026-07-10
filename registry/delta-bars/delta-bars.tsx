@@ -1,3 +1,5 @@
+'use client'
+
 /**
  * DeltaBars — diverging daily delta ribbon for a PAIR of rivals.
  *
@@ -5,7 +7,8 @@
  * bar of the daily difference (a − b) from a zero midline — up in A's color
  * when A leads, down in B's color when B leads. The eye reads streaks and
  * flips of the lead instantly; symmetric ±max scale computed from the data.
- * Pure server component — props → SVG, zero client JS.
+ * Client component only for the entrance animation: an IntersectionObserver
+ * fires a time-based staggered grow when the chart scrolls into view.
  *
  * Props:
  * - a, b: DeltaSeries — the two rivals: { label, values (number|null per
@@ -13,6 +16,7 @@
  *   and seriesColor(1)) }.
  * - xLabels?: { frac (0..1 across the plot), text }[] — x-axis captions.
  */
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { seriesColor } from '../../lib/palette'
 
 export type DeltaSeries = {
@@ -49,6 +53,28 @@ export function DeltaBars({
   b: DeltaSeries
   xLabels?: Array<{ frac: number; text: string }>
 }) {
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const [entered, setEntered] = useState(false)
+
+  useEffect(() => {
+    const node = wrapRef.current
+    if (!node || typeof IntersectionObserver === 'undefined') {
+      setEntered(true)
+      return
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setEntered(true)
+          io.disconnect()
+        }
+      },
+      { threshold: 0.25 }
+    )
+    io.observe(node)
+    return () => io.disconnect()
+  }, [])
+
   const colorA = a.color ?? seriesColor(0)
   const colorB = b.color ?? seriesColor(1)
   const n = a.values.length
@@ -63,64 +89,91 @@ export function DeltaBars({
   const plotW = W - PAD.l - PAD.r
   const barW = Math.max(2, plotW / n - 2)
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full">
-      <line
-        x1={PAD.l}
-        x2={W - PAD.r}
-        y1={mid}
-        y2={mid}
-        stroke="var(--vz-axis,#D9D9D9)"
-        strokeWidth="1"
-      />
-      <text x={PAD.l - 8} y={16} textAnchor="end" fontSize="11" fill={MUT}>
-        +{fmt(max)}
-      </text>
-      <text x={PAD.l - 8} y={H - 22} textAnchor="end" fontSize="11" fill={MUT}>
-        −{fmt(max)}
-      </text>
-      {delta.map((d, i) => {
-        if (d === null) return null
-        const hh = (Math.abs(d) / max) * (mid - 24)
-        return (
-          <rect
-            key={i}
-            className={d >= 0 ? 'vc-grow-y' : 'vc-grow-y-down'}
-            x={PAD.l + (i / n) * plotW}
-            y={d >= 0 ? mid - hh : mid}
-            width={barW}
-            height={Math.max(1.5, hh)}
-            rx="2"
-            fill={d >= 0 ? colorA : colorB}
-          >
-            <title>{`${d >= 0 ? a.label : b.label} ahead by ${fmt(Math.abs(d))}`}</title>
-          </rect>
-        )
-      })}
-      {xLabels?.map((l) => (
-        <text
-          key={l.text}
-          x={PAD.l + l.frac * plotW}
-          y={H - 6}
-          textAnchor="middle"
-          fontSize="11"
-          fill={MUT}
-        >
-          {l.text}
+    <div ref={wrapRef} className={entered ? 'vdb-in' : ''}>
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full">
+        <line
+          x1={PAD.l}
+          x2={W - PAD.r}
+          y1={mid}
+          y2={mid}
+          stroke="var(--vz-axis,#D9D9D9)"
+          strokeWidth="1"
+        />
+        <text x={PAD.l - 8} y={16} textAnchor="end" fontSize="11" fill={MUT}>
+          +{fmt(max)}
         </text>
-      ))}
-      <text x={W - PAD.r} y={16} textAnchor="end" fontSize="11.5" fontWeight="650" fill={colorA}>
-        ▲ {a.label} ahead
-      </text>
-      <text
-        x={W - PAD.r}
-        y={H - 22}
-        textAnchor="end"
-        fontSize="11.5"
-        fontWeight="650"
-        fill={colorB}
-      >
-        ▼ {b.label} ahead
-      </text>
-    </svg>
+        <text x={PAD.l - 8} y={H - 22} textAnchor="end" fontSize="11" fill={MUT}>
+          −{fmt(max)}
+        </text>
+        {delta.map((d, i) => {
+          if (d === null) return null
+          const hh = (Math.abs(d) / max) * (mid - 24)
+          return (
+            <rect
+              key={i}
+              className={d >= 0 ? 'vdb-bar vdb-up' : 'vdb-bar vdb-down'}
+              style={{ '--i': i } as CSSProperties}
+              x={PAD.l + (i / n) * plotW}
+              y={d >= 0 ? mid - hh : mid}
+              width={barW}
+              height={Math.max(1.5, hh)}
+              rx="2"
+              fill={d >= 0 ? colorA : colorB}
+            >
+              <title>{`${d >= 0 ? a.label : b.label} ahead by ${fmt(Math.abs(d))}`}</title>
+            </rect>
+          )
+        })}
+        {xLabels?.map((l) => (
+          <text
+            key={l.text}
+            x={PAD.l + l.frac * plotW}
+            y={H - 6}
+            textAnchor="middle"
+            fontSize="11"
+            fill={MUT}
+          >
+            {l.text}
+          </text>
+        ))}
+        <text
+          className="vdb-legend"
+          x={W - PAD.r}
+          y={16}
+          textAnchor="end"
+          fontSize="11.5"
+          fontWeight="650"
+          fill={colorA}
+        >
+          ▲ {a.label} ahead
+        </text>
+        <text
+          className="vdb-legend"
+          x={W - PAD.r}
+          y={H - 22}
+          textAnchor="end"
+          fontSize="11.5"
+          fontWeight="650"
+          fill={colorB}
+        >
+          ▼ {b.label} ahead
+        </text>
+      </svg>
+
+      {/* Bars grow from the zero midline on viewport entry (up-bars from the
+          bottom edge, down-bars from the top edge); legends fade in.
+          Disabled under prefers-reduced-motion. */}
+      <style>{`
+        .vdb-bar { transform-box: fill-box; }
+        .vdb-in .vdb-up { transform-origin: 50% 100%; animation: vdb-grow 0.7s cubic-bezier(0.2, 0.7, 0.3, 1) calc(var(--i) * 35ms) both; }
+        .vdb-in .vdb-down { transform-origin: 50% 0%; animation: vdb-grow 0.7s cubic-bezier(0.2, 0.7, 0.3, 1) calc(var(--i) * 35ms) both; }
+        .vdb-in .vdb-legend { animation: vdb-fade 0.6s cubic-bezier(0.2, 0.7, 0.3, 1) 250ms both; }
+        @keyframes vdb-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+        @keyframes vdb-fade { from { opacity: 0; } to { opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) {
+          .vdb-in .vdb-up, .vdb-in .vdb-down, .vdb-in .vdb-legend { animation: none; transform: none; opacity: 1; }
+        }
+      `}</style>
+    </div>
   )
 }

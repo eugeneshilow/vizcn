@@ -6,6 +6,6 @@
   "family": "time-series",
   "whenToUse": "Liveness at a glance over a long window of weekly counts (repo activity, releases, posts) where the shape and recency matter more than exact values.",
   "antiUse": "Not for exact value reading or short ranges (<12 weeks) — use a column chart instead.",
-  "client": false,
+  "client": true,
   "props": "weeks: number[] (weekly counts, oldest first, newest last); color? (default var(--vz-good,#059669))"
 }

@@ -1,3 +1,5 @@
+'use client'
+
 /**
  * Treemap — the whole field as area: flat slice-and-dice treemap in N rows.
  *
@@ -7,7 +9,8 @@
  * total value, and each tile's width is its share of that band. Tile
  * opacity scales with value relative to the leader, so bigger players read
  * brighter. Tiles can carry an icon, sub-caption, live badge, and can be
- * links. Pure server component — div-based, zero client JS.
+ * links. Client component: tiles pop in (scale + fade, staggered) once the
+ * treemap enters the viewport, via IntersectionObserver.
  *
  * Props:
  * - items: TreemapItem[] — label, value, optional valueLabel / sub / href /
@@ -17,6 +20,8 @@
  * - defaultColor?: string — tile color when the item has none
  *   (default seriesColor(0)).
  */
+import { useEffect, useRef, useState } from 'react'
+import type { CSSProperties } from 'react'
 import { seriesColor } from '../../lib/palette'
 
 export type TreemapItem = {
@@ -53,6 +58,28 @@ export function Treemap({
   rowHeight?: number
   defaultColor?: string
 }) {
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const [entered, setEntered] = useState(false)
+
+  useEffect(() => {
+    const node = wrapRef.current
+    if (!node || typeof IntersectionObserver === 'undefined') {
+      setEntered(true)
+      return
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setEntered(true)
+          io.disconnect()
+        }
+      },
+      { threshold: 0.25 }
+    )
+    io.observe(node)
+    return () => io.disconnect()
+  }, [])
+
   const sorted = [...items].sort((a, b) => b.value - a.value)
   const total = sorted.reduce((a, i) => a + i.value, 0)
   const perRow = total / rows
@@ -68,9 +95,11 @@ export function Treemap({
       row.reduce((a, i) => a + i.value, 0),
       1
     )
+    // Stagger index continues across rows: tile N of the whole map, not of the row
+    const indexOffset = rowsArr.slice(0, rowIndex).reduce((a, r) => a + r.length, 0)
     return (
       <div key={rowIndex} className="flex gap-[3px]" style={{ height: rowHeight }}>
-        {row.map((item) => {
+        {row.map((item, tileIndex) => {
           const inner = (
             <>
               <div className="flex min-w-0 items-center gap-1.5">
@@ -122,9 +151,10 @@ export function Treemap({
               ? 'var(--vz-track,#EFEDEA)'
               : (item.color ?? defaultColor),
             opacity: item.muted ? 1 : 0.72 + 0.28 * (item.value / sorted[0].value),
-          }
+            '--i': indexOffset + tileIndex,
+          } as CSSProperties
           const tip = `${item.label}${item.sub ? ' · ' + item.sub : ''} - ${item.valueLabel ?? item.value}${item.badge ? ' · ' + item.badge : ''}`
-          const cls = 'vc-mark flex min-w-0 flex-col overflow-hidden px-2 py-1.5'
+          const cls = 'vtm-tile flex min-w-0 flex-col overflow-hidden px-2 py-1.5'
           return item.href ? (
             <a
               key={item.label}
@@ -144,5 +174,20 @@ export function Treemap({
       </div>
     )
   }
-  return <div className="space-y-[3px]">{rowsArr.map((row, i) => renderRow(row, i))}</div>
+  return (
+    <div ref={wrapRef} className={'space-y-[3px]' + (entered ? ' vtm-in' : '')}>
+      {rowsArr.map((row, i) => renderRow(row, i))}
+      {/* Tiles pop in on viewport entry, staggered per tile. The keyframes
+          define only a `from` state so the implicit `to` resolves to each
+          tile's own inline opacity (value-scaled), not a hardcoded 1.
+          Disabled under prefers-reduced-motion. */}
+      <style>{`
+        .vtm-in .vtm-tile { animation: vtm-pop 0.7s cubic-bezier(0.2, 0.7, 0.3, 1) calc(var(--i, 0) * 35ms) both; }
+        @keyframes vtm-pop { from { opacity: 0; transform: scale(0.7); } }
+        @media (prefers-reduced-motion: reduce) {
+          .vtm-in .vtm-tile { animation: none; }
+        }
+      `}</style>
+    </div>
+  )
 }

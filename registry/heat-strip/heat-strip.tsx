@@ -1,3 +1,7 @@
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
+
 /**
  * HeatStrip — a year of weekly activity as one strip of thin bars.
  *
@@ -6,8 +10,8 @@
  * strip reads as a heat texture rather than a precise chart. A numbers row
  * above gives the three facts that matter (total / peak per week / current
  * week); hovering any bar shows its exact count and how many weeks ago it
- * was. CSS-only grow-in on mount (works from a server component, disabled
- * under reduced motion). Pure server component — div-based, zero client JS.
+ * was. Bars grow in on viewport entry (IntersectionObserver-triggered,
+ * time-based, disabled under reduced motion).
  *
  * Props:
  * - weeks: number[] — weekly counts, oldest first, newest last (typically 52).
@@ -27,12 +31,34 @@ export function HeatStrip({
   weeks: number[]
   color?: string
 }) {
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const [entered, setEntered] = useState(false)
+
+  useEffect(() => {
+    const node = wrapRef.current
+    if (!node || typeof IntersectionObserver === 'undefined') {
+      setEntered(true)
+      return
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setEntered(true)
+          io.disconnect()
+        }
+      },
+      { threshold: 0.25 }
+    )
+    io.observe(node)
+    return () => io.disconnect()
+  }, [])
+
   const max = Math.max(...weeks, 1)
   const total = weeks.reduce((sum, n) => sum + n, 0)
   const last = weeks[weeks.length - 1] ?? 0
   return (
-    <div>
-      <p className="mb-3 flex flex-wrap gap-x-6 gap-y-1 text-[12.5px] text-[var(--vz-text3,#5C5C5C)] [font-variant-numeric:tabular-nums]">
+    <div ref={wrapRef} className={entered ? 'vhs-in' : ''}>
+      <p className="vhs-head mb-3 flex flex-wrap gap-x-6 gap-y-1 text-[12.5px] text-[var(--vz-text3,#5C5C5C)] [font-variant-numeric:tabular-nums]">
         <span>
           total <strong className="font-semibold text-[var(--vz-ink,#111)]">{fmt(total)}</strong>
         </span>
@@ -54,13 +80,14 @@ export function HeatStrip({
               {fmt(count)} · {i === weeks.length - 1 ? 'now' : `−${weeks.length - 1 - i} wk`}
             </span>
             <div
-              className="vc-grow-y w-full transition-opacity duration-150 group-hover:!opacity-100"
+              className="vhs-bar w-full transition-opacity duration-150 group-hover:!opacity-100"
               style={{
+                '--i': i,
                 height: Math.max(3, (count / max) * 56),
                 backgroundColor: color,
                 opacity: 0.25 + 0.75 * (count / max),
                 borderRadius: '2px 2px 0 0',
-              }}
+              } as React.CSSProperties}
             />
           </div>
         ))}
@@ -69,6 +96,21 @@ export function HeatStrip({
         <span>−{weeks.length - 1} wk</span>
         <span>now</span>
       </div>
+
+      {/* Bars grow up on viewport entry; disabled under prefers-reduced-motion */}
+      <style>{`
+        .vhs-in .vhs-head { animation: vhs-fade 0.6s cubic-bezier(0.2, 0.7, 0.3, 1) both; }
+        .vhs-in .vhs-bar {
+          transform-origin: bottom;
+          animation: vhs-grow 0.7s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+          animation-delay: calc(var(--i) * 8ms);
+        }
+        @keyframes vhs-fade { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes vhs-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+        @media (prefers-reduced-motion: reduce) {
+          .vhs-in .vhs-head, .vhs-in .vhs-bar { animation: none; }
+        }
+      `}</style>
     </div>
   )
 }

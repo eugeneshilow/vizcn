@@ -1,3 +1,5 @@
+'use client'
+
 /**
  * DumbbellRange — two endpoints per row on a shared zero-based scale,
  * joined by a connector bar (dumbbell genre).
@@ -7,7 +9,9 @@
  * label · track with lo-mark, hi-mark and connector · numeric pair. The
  * hero row gets an accent connector and an accent hi-mark; all rows share
  * one scale from zero to a nice ceiling above the largest hi value (or an
- * explicit maxValue). Pure server component — div-based, zero client JS.
+ * explicit maxValue). Client component: entrance animation fires once on
+ * viewport entry via IntersectionObserver (connectors grow, marks pop,
+ * rows staggered); disabled under prefers-reduced-motion.
  *
  * Props:
  * - rows: DumbbellRow[] — label, lo, hi, optional highlight.
@@ -22,6 +26,7 @@
  * - highlightColor? — connector color on highlighted rows
  *   (default seriesColor(1)).
  */
+import { useEffect, useRef, useState } from 'react'
 import { seriesColor } from '../../lib/palette'
 
 export type DumbbellRow = {
@@ -68,17 +73,40 @@ export function DumbbellRange({
   hiColor?: string
   highlightColor?: string
 }) {
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const [entered, setEntered] = useState(false)
+
+  useEffect(() => {
+    const node = wrapRef.current
+    if (!node || typeof IntersectionObserver === 'undefined') {
+      setEntered(true)
+      return
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setEntered(true)
+          io.disconnect()
+        }
+      },
+      { threshold: 0.25 }
+    )
+    io.observe(node)
+    return () => io.disconnect()
+  }, [])
+
   const max = maxValue ?? niceMax(Math.max(...rows.map((r) => Math.max(r.lo, r.hi)), 1))
   const fmt = formatValue ?? ((v: number) => `${unit}${v}`)
   return (
-    <div className="space-y-3">
-      {rows.map((r) => {
+    <div ref={wrapRef} className={`space-y-3 ${entered ? 'vdr-in' : ''}`}>
+      {rows.map((r, index) => {
         const x1 = (Math.min(r.lo, r.hi) / max) * 100
         const x2 = (Math.max(r.lo, r.hi) / max) * 100
         return (
           <div
             key={r.label}
             className="grid grid-cols-[150px_minmax(0,1fr)_120px] items-center gap-4"
+            style={{ '--i': index } as React.CSSProperties}
           >
             <p
               className={`truncate text-[13px] ${r.highlight ? 'font-bold text-[var(--vz-ink,#111)]' : 'font-medium text-[var(--vz-text3,#5C5C5C)]'}`}
@@ -88,7 +116,7 @@ export function DumbbellRange({
             <div className="relative h-[22px]">
               <div className="absolute inset-y-[9px] left-0 right-0 rounded bg-[var(--vz-track,#F5F5F4)]" />
               <div
-                className="vc-grow-x absolute inset-y-[9px] rounded"
+                className="vdr-conn absolute inset-y-[9px] rounded"
                 style={{
                   left: `${x1}%`,
                   width: `${Math.max(x2 - x1, 0.5)}%`,
@@ -96,11 +124,11 @@ export function DumbbellRange({
                 }}
               />
               <span
-                className="vc-mark absolute top-0 h-[22px] w-[3px] rounded"
+                className="vdr-mark absolute top-0 h-[22px] w-[3px] rounded"
                 style={{ left: `${(r.lo / max) * 100}%`, backgroundColor: loColor }}
               />
               <span
-                className="vc-mark absolute top-0 h-[22px] w-[3px] rounded"
+                className="vdr-mark absolute top-0 h-[22px] w-[3px] rounded"
                 style={{
                   left: `${(r.hi / max) * 100}%`,
                   backgroundColor: r.highlight ? hiColor : 'var(--vz-muted,#8A8A8A)',
@@ -120,6 +148,30 @@ export function DumbbellRange({
         {hiLabel}
         {caption ? ` — ${caption}` : null}
       </p>
+
+      {/* Connectors grow from the lo side, marks pop; rows staggered on viewport entry. */}
+      <style>{`
+        .vdr-conn { transform-origin: left center; }
+        .vdr-in .vdr-conn {
+          animation: vdr-grow-x 0.7s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+          animation-delay: calc(var(--i) * 35ms);
+        }
+        .vdr-in .vdr-mark {
+          animation: vdr-pop 0.6s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+          animation-delay: calc(var(--i) * 35ms + 90ms);
+        }
+        @keyframes vdr-grow-x {
+          from { transform: scaleX(0); }
+          to { transform: scaleX(1); }
+        }
+        @keyframes vdr-pop {
+          from { opacity: 0; transform: scale(0.4); }
+          to { opacity: 1; transform: scale(1); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .vdr-in .vdr-conn, .vdr-in .vdr-mark { animation: none; }
+        }
+      `}</style>
     </div>
   )
 }

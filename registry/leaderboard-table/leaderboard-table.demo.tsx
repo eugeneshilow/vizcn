@@ -1,12 +1,11 @@
 import { LeaderboardBars } from './leaderboard-table'
 import type { LeaderboardModel, LeaderboardRun } from './leaderboard-table'
+import { seriesColor } from '../../lib/palette'
 
 /**
- * Demo: REAL data — DeepSWE leaderboard snapshot (Jul 1, 2026); the same
- * data rail as the frontier-board demo (one dataset feeds both forms).
- * Benchmark scores are facts; vendor colors identify the vendors. Best
- * runs carry exact leaderboard values; tokens/steps for other runs are
- * derived deterministically from cost.
+ * Demo: fictional models with real-leaderboard density — the same data
+ * rail as the frontier-board demo (one dataset feeds both forms). Every
+ * name is invented; values mirror real coding-leaderboard density.
  */
 
 const lr = (
@@ -32,9 +31,9 @@ const lr = (
 
 const V11: LeaderboardModel[] = [
   {
-    id: 'claude-fable-5',
-    color: '#E8734A',
-    badge: 'A',
+    id: 'atlas-4',
+    color: seriesColor(0),
+    badge: 'M',
     runs: [
       lr('max', 21.63, 70.4, { std: 4, x: { tokens: 119, steps: 88 } }),
       lr('high', 13.4, 70),
@@ -44,9 +43,9 @@ const V11: LeaderboardModel[] = [
     ],
   },
   {
-    id: 'claude-opus-4.8',
-    color: '#E8734A',
-    badge: 'A',
+    id: 'atlas-3.5',
+    color: seriesColor(0),
+    badge: 'M',
     runs: [
       lr('max', 13.22, 59.1, { x: { tokens: 135, steps: 120 } }),
       lr('xhigh', 8.0, 54.3),
@@ -56,9 +55,9 @@ const V11: LeaderboardModel[] = [
     ],
   },
   {
-    id: 'claude-sonnet-5',
-    color: '#E8734A',
-    badge: 'A',
+    id: 'atlas-3',
+    color: seriesColor(0),
+    badge: 'M',
     runs: [
       lr('max', 26.4, 54, { std: 4, x: { tokens: 214, steps: 268 } }),
       lr('xhigh', 11.9, 49.7),
@@ -68,15 +67,15 @@ const V11: LeaderboardModel[] = [
     ],
   },
   {
-    id: 'claude-sonnet-4.6',
-    color: '#E8734A',
-    badge: 'A',
+    id: 'atlas-2',
+    color: seriesColor(0),
+    badge: 'M',
     runs: [lr('high', 5.52, 30.2, { std: 4, x: { tokens: 76, steps: 134 } })],
   },
   {
-    id: 'gpt-5.5',
-    color: '#10A37F',
-    badge: 'O',
+    id: 'nova-5',
+    color: seriesColor(1),
+    badge: 'H',
     runs: [
       lr('xhigh', 7.23, 67.1, { std: 6, x: { tokens: 46, steps: 82 } }),
       lr('high', 4.9, 64.4),
@@ -85,43 +84,43 @@ const V11: LeaderboardModel[] = [
     ],
   },
   {
-    id: 'gpt-5.4',
-    color: '#10A37F',
-    badge: 'O',
+    id: 'nova-4',
+    color: seriesColor(1),
+    badge: 'H',
     runs: [lr('xhigh', 5.65, 51.7, { x: { tokens: 71, steps: 70 } })],
   },
   {
-    id: 'glm-5.2',
-    color: '#087F8C',
-    badge: 'Z',
+    id: 'orion-72b',
+    color: seriesColor(2),
+    badge: 'V',
     runs: [
       lr('max', 3.92, 43.7, { x: { tokens: 78, steps: 129 } }),
       lr('high', 2.9, 36.3),
     ],
   },
   {
-    id: 'gemini-3.5-flash',
-    color: '#4285F4',
-    badge: 'G',
+    id: 'vega-flash',
+    color: seriesColor(3),
+    badge: 'S',
     runs: [lr('medium', 7.34, 37.2, { x: { tokens: 276, steps: 86 } })],
   },
   {
-    id: 'gemini-3.1-pro',
-    color: '#4285F4',
-    badge: 'G',
+    id: 'vega-pro',
+    color: seriesColor(3),
+    badge: 'S',
     runs: [lr('high', 9.48, 11.8, { x: { tokens: 196, steps: 81 } })],
   },
   {
-    id: 'kimi-k2.7-code',
-    color: '#D64550',
-    badge: 'K',
+    id: 'quasar-coder',
+    color: seriesColor(5),
+    badge: 'Q',
     runs: [lr(undefined, 2.82, 30.7, { std: 1, x: { tokens: 59, steps: 149 } })],
   },
 ]
 
 /** v1 — the previous snapshot: a notch lower and cheaper, two models fewer. */
 const V1: LeaderboardModel[] = V11.filter(
-  (m) => m.id !== 'glm-5.2' && m.id !== 'kimi-k2.7-code',
+  (m) => m.id !== 'orion-72b' && m.id !== 'quasar-coder',
 ).map((m) => ({
   ...m,
   runs: m.runs.map((run) => ({
@@ -139,7 +138,7 @@ export default function LeaderboardTableDemo() {
   return (
     <LeaderboardBars
       meta="113 tasks · updated Jul 1, 2026"
-      footnote="Data: DeepSWE leaderboard (Jul 2026 snapshot). Best runs carry exact leaderboard values; tokens/steps for other effort levels are derived deterministically from cost."
+      footnote="All runs executed on the same harness with a 100-step budget; cost is the average per solved task. Fictional models, deterministic demo data."
       versions={[
         { key: 'v1.1', label: 'v1.1', models: V11 },
         { key: 'v1', label: 'v1', models: V1 },
