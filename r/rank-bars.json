@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "rank-bars",
+  "type": "registry:component",
+  "title": "Rank Bars",
+  "description": "Horizontal ranking bars — label, zero-based bar, value — with an accent-highlighted hero row.",
+  "registryDependencies": [
+    "https://vibecoding.tech/vizcn/r/theme.json",
+    "https://vibecoding.tech/vizcn/r/palette.json"
+  ],
+  "files": [
+    {
+      "path": "registry/rank-bars/rank-bars.tsx",
+      "content": "/**\n * RankBarChart — horizontal ranking bars: label · bar · value.\n *\n * Answers \"who leads, by how much?\" in 2 seconds: rows sorted by the caller,\n * bars scaled from zero to the max value of the list (or an explicit\n * maxValue), the hero row highlighted in an accent color with bold text.\n * Leaderboard genre: clean data rows, no chart chrome. Pure server\n * component — div-based, zero client JS.\n *\n * Props:\n * - items: RankBarItem[] — label, value, optional valueLabel / sub /\n *   highlight / per-row color.\n * - maxValue?: number — scale ceiling (default: max item value).\n * - unit?: string — suffix appended to plain numeric values (e.g. \"%\").\n * - highlightColor?: string — bar color for highlighted rows\n *   (default: seriesColor(0)).\n */\nimport { seriesColor } from \"@/lib/vizcn-palette\"\n\nconst BAR_DEFAULT = 'var(--vz-axis,#D9D9D9)'\n\nexport type RankBarItem = {\n  label: string\n  value: number\n  /** value caption (default: the number itself) */\n  valueLabel?: string\n  /** muted line under the label: vendor, date, note */\n  sub?: string\n  /** hero row — accent bar + bold label */\n  highlight?: boolean\n  /** custom series color (per-vendor); highlight wins */\n  color?: string\n}\n\n/**\n * Horizontal ranking bars (leaderboard-table genre): label · bar · value.\n * Scale runs from zero to the max value of the list (or maxValue).\n */\nexport function RankBarChart({\n  items,\n  maxValue,\n  unit = '',\n  highlightColor = seriesColor(0),\n}: {\n  items: RankBarItem[]\n  maxValue?: number\n  unit?: string\n  highlightColor?: string\n}) {\n  const max = maxValue ?? Math.max(...items.map((item) => item.value), 1)\n  return (\n    <div className=\"vc-focus space-y-3\">\n      {items.map((item) => {\n        const width = Math.max(2, Math.round((item.value / max) * 100))\n        const color = item.highlight ? highlightColor : (item.color ?? BAR_DEFAULT)\n        return (\n          <div\n            key={item.label}\n            className=\"grid grid-cols-[minmax(0,200px)_minmax(0,1fr)_72px] items-center gap-4\"\n          >\n            <div className=\"min-w-0\">\n              <p\n                className={`truncate text-[13px] leading-5 ${item.highlight ? 'font-bold' : 'font-medium text-[var(--vz-text3,#5C5C5C)]'}`}\n              >\n                {item.label}\n              </p>\n              {item.sub ? (\n                <p className=\"truncate text-[10.5px] leading-4 text-[var(--vz-muted,#8A8A8A)]\">\n                  {item.sub}\n                </p>\n              ) : null}\n            </div>\n            <div\n              className=\"h-[16px] bg-[var(--vz-track,#F5F5F4)]\"\n              title={`${item.label} · ${item.valueLabel ?? item.value}`}\n            >\n              <div\n                className=\"vc-grow-x h-full\"\n                style={{\n                  width: `${width}%`,\n                  backgroundColor: color,\n                  borderRadius: '0 4px 4px 0',\n                }}\n              />\n            </div>\n            <p\n              className={`text-right text-[13px] tabular-nums ${item.highlight ? 'font-bold' : 'font-medium text-[var(--vz-text3,#5C5C5C)]'}`}\n            >\n              {item.valueLabel ?? `${item.value}${unit}`}\n            </p>\n          </div>\n        )\n      })}\n    </div>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "components/vizcn/rank-bars.tsx"
+    }
+  ],
+  "meta": {
+    "question": "Who leads this ranking, and by how much?",
+    "family": "ranking",
+    "whenToUse": "Comparing one metric across a handful of named entities where order and gaps matter (leaderboards, price ladders).",
+    "antiUse": "Not for time series, part-to-whole composition, or more than ~10 rows — use a table or sparklines instead."
+  }
+}

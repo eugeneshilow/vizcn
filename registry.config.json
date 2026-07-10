@@ -1,0 +1,8 @@
+{
+  "$comment": "Registry parameters — the ONLY place shelf URLs live (alienability: fork changes this file, not the sources). Injected by scripts/build-registry.mjs.",
+  "name": "vizcn",
+  "shelfUrl": "https://vibecoding.tech/vizcn",
+  "registryBase": "https://vibecoding.tech/vizcn/r",
+  "author": "eugeneshilow",
+  "xHandle": "eugeneshilow"
+}

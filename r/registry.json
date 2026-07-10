@@ -1,0 +1,103 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "vizcn",
+  "homepage": "https://vibecoding.tech/vizcn",
+  "items": [
+    {
+      "name": "theme",
+      "type": "registry:theme",
+      "title": "vizcn theme tokens",
+      "description": "Structural --vz-* tokens (light + dark). Namespaced: installing vizcn never repaints your app."
+    },
+    {
+      "name": "palette",
+      "type": "registry:lib",
+      "title": "vizcn series palette",
+      "description": "Brand-neutral categorical/ordinal series colors (seriesColor, RAMP, HEAT)."
+    },
+    {
+      "name": "motion",
+      "type": "registry:item",
+      "title": "vizcn motion (optional)",
+      "description": "Pure-CSS entrance/interaction kit (vc-* classes). Forms render fine without it."
+    },
+    {
+      "name": "bench-matrix",
+      "type": "registry:component",
+      "title": "Bench Matrix",
+      "description": "Vendor-announcement style benchmark board: benchmark rows grouped by domain vs model columns, with a tinted hero column and bold best-in-row plates."
+    },
+    {
+      "name": "bubble-field",
+      "type": "registry:component",
+      "title": "Bubble Field",
+      "description": "Bubble scatter on log-log axes — position for two counts, bubble area for a third, color for category."
+    },
+    {
+      "name": "distribution-bar",
+      "type": "registry:component",
+      "title": "Distribution Bar",
+      "description": "Proportional stacked strip with in-segment labels and a share legend below."
+    },
+    {
+      "name": "dune-flow",
+      "type": "registry:component",
+      "title": "Dune Flow",
+      "description": "Smooth B-spline stacked area flow showing what a stream was made of and when the waves came."
+    },
+    {
+      "name": "frontier-board",
+      "type": "registry:component",
+      "title": "Frontier Board",
+      "description": "Interactive score-vs-cost scatter where each model's effort levels connect into an efficiency frontier line, with metric/version toggles, model filter, and hover focus."
+    },
+    {
+      "name": "pipeline-flow",
+      "type": "registry:component",
+      "title": "Pipeline Flow",
+      "description": "Horizontal chain of stage boxes linked by animated marching-ants arrows."
+    },
+    {
+      "name": "race-lines",
+      "type": "registry:component",
+      "title": "Race Lines",
+      "description": "Multi-series activity line chart with crosshair, sorted tooltip, and draw-in animation."
+    },
+    {
+      "name": "radar-profile",
+      "type": "registry:component",
+      "title": "Radar Profile",
+      "description": "Two-entity radar (spider) chart — overlapping strength polygons over shared 0-100 axes with a legend."
+    },
+    {
+      "name": "rank-bars",
+      "type": "registry:component",
+      "title": "Rank Bars",
+      "description": "Horizontal ranking bars — label, zero-based bar, value — with an accent-highlighted hero row."
+    },
+    {
+      "name": "stacked-activity",
+      "type": "registry:component",
+      "title": "Stacked Activity Bars",
+      "description": "Interactive stacked daily columns with a live legend that doubles as the tooltip; the last, incomplete day is hatched."
+    },
+    {
+      "name": "tug-of-war",
+      "type": "registry:component",
+      "title": "Tug of War",
+      "description": "Diverging duel bars: two contenders split a 100% rope per row; the brighter side is the winner."
+    },
+    {
+      "name": "waffle-grid",
+      "type": "registry:component",
+      "title": "Waffle Grid",
+      "description": "A 10x10 waffle grid rendering \"N of 100\" as countable filled cells with a bold readout and caption."
+    },
+    {
+      "name": "warming-stripes",
+      "type": "registry:component",
+      "title": "Warming Stripes",
+      "description": "Climate-stripes ribbon: one stripe per year, colored by era heat level on a sequential ramp."
+    }
+  ]
+}

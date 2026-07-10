@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "waffle-grid",
+  "type": "registry:component",
+  "title": "Waffle Grid",
+  "description": "A 10x10 waffle grid rendering \"N of 100\" as countable filled cells with a bold readout and caption.",
+  "registryDependencies": [
+    "https://vibecoding.tech/vizcn/r/theme.json",
+    "https://vibecoding.tech/vizcn/r/palette.json"
+  ],
+  "files": [
+    {
+      "path": "registry/waffle-grid/waffle-grid.tsx",
+      "content": "/**\n * Waffle — \"N of 100\" as a crowd: a 10x10 grid of cells where the first\n * N cells are filled with the accent color and the rest stay on the\n * neutral track.\n *\n * Answers \"how big is this share, really?\" in 2 seconds: a percentage\n * rendered as countable units reads more viscerally than a number or a\n * pie slice. Pure server component — div-based, zero client JS.\n *\n * Props:\n * - value: number — how many cells out of 100 are filled (0–100).\n * - color?: string — fill color for the counted cells\n *   (default: seriesColor(0)).\n * - caption: string — one-line explanation shown next to the bold\n *   \"N of 100\" readout.\n */\nimport { seriesColor } from \"@/lib/vizcn-palette\"\n\nexport function Waffle({\n  value,\n  color = seriesColor(0),\n  caption,\n}: {\n  value: number\n  color?: string\n  caption: string\n}) {\n  return (\n    <div>\n      <div className=\"vc-reveal grid w-fit grid-cols-10 gap-[5px]\">\n        {Array.from({ length: 100 }, (_, i) => (\n          <span\n            key={i}\n            className=\"block h-[18px] w-[18px] rounded-[4px]\"\n            title={`${value} of 100`}\n            style={{ backgroundColor: i < value ? color : 'var(--vz-track,#F5F5F4)' }}\n          />\n        ))}\n      </div>\n      <p className=\"mt-3 max-w-[460px] text-[13.5px] leading-6 text-[var(--vz-text3,#5C5C5C)]\">\n        <b className=\"text-[16px]\" style={{ color }}>\n          {value} of 100\n        </b>{' '}\n        - {caption}\n      </p>\n    </div>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "components/vizcn/waffle-grid.tsx"
+    }
+  ],
+  "meta": {
+    "question": "How big is this share of the whole, really?",
+    "family": "composition",
+    "whenToUse": "Making a single percentage feel tangible — one share of one whole, where counting units beats reading a number.",
+    "antiUse": "Not for comparing several shares, time trends, or non-percentage values — use rank bars or a distribution bar instead."
+  }
+}

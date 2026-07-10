@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "palette",
+  "type": "registry:lib",
+  "title": "vizcn series palette",
+  "description": "Brand-neutral categorical/ordinal series colors (seriesColor, RAMP, HEAT).",
+  "files": [
+    {
+      "path": "lib/palette.ts",
+      "content": "/**\n * vizcn series palette — brand-neutral, colorblind-tested categorical hues.\n *\n * Color follows the entity: pass an explicit `color` per series in your\n * data, or fall back to seriesColor(i) for a stable per-index hue. Forms\n * never hardcode series colors — swap this file (or pass your own hexes)\n * to re-brand every demo at once.\n *\n * Structural colors (surface/grid/axis/ink) are CSS tokens in theme.css;\n * semantic status (good/mid/bad) lives there too. This file is only the\n * categorical/ordinal series layer.\n */\nexport const CATEGORICAL = [\n  '#4E79A7', // blue\n  '#F28E2B', // orange\n  '#59A14F', // green\n  '#B07AA1', // purple\n  '#76B7B2', // teal\n  '#E15759', // red\n  '#EDC948', // yellow\n  '#FF9DA7', // pink\n  '#9C755F', // brown\n  '#BAB0AC', // grey\n] as const\n\n/** Stable color for series index i (wraps around the palette). */\nexport function seriesColor(i: number): string {\n  return CATEGORICAL[((i % CATEGORICAL.length) + CATEGORICAL.length) % CATEGORICAL.length]\n}\n\n/**\n * Single-hue light→dark ramp for ORDINAL series (priorities, tiers,\n * intensity). Ordered data lies with categorical hues — use the ramp.\n */\nexport const RAMP = ['#8EB4D8', '#4E79A7', '#2E4C6D'] as const\n\n/** Sequential 5-step ramp for heat/intensity scales (stripes, calendars). */\nexport const HEAT = ['#EDF2F7', '#B9D0E8', '#7FA7CD', '#4E79A7', '#2E4C6D'] as const\n",
+      "type": "registry:lib",
+      "target": "lib/vizcn-palette.ts"
+    }
+  ]
+}

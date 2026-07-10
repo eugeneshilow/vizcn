@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pipeline-flow",
+  "type": "registry:component",
+  "title": "Pipeline Flow",
+  "description": "Horizontal chain of stage boxes linked by animated marching-ants arrows.",
+  "registryDependencies": [
+    "https://vibecoding.tech/vizcn/r/theme.json",
+    "https://vibecoding.tech/vizcn/r/palette.json"
+  ],
+  "files": [
+    {
+      "path": "registry/pipeline-flow/pipeline-flow.tsx",
+      "content": "import { seriesColor } from \"@/lib/vizcn-palette\"\n\n/**\n * PipelineFlow — \"what are the stages, and which way does work move?\"\n *\n * A horizontal chain of labeled stage boxes connected by animated\n * marching-ants arrows (CSS-only, so it renders from a server component\n * and respects prefers-reduced-motion). Wraps to new rows on narrow\n * containers.\n *\n * Props:\n * - steps:  Array<{ name: string; desc: string }> — ordered pipeline\n *           stages; `name` is the bold title, `desc` a one-line caption.\n * - accent: string — arrow/connector color (default: seriesColor(0)).\n */\nexport function PipelineFlow({\n  steps,\n  accent = seriesColor(0),\n}: {\n  steps: Array<{ name: string; desc: string }>\n  accent?: string\n}) {\n  return (\n    <div className=\"max-w-[760px]\">\n      <style>{`@keyframes vp-march{to{stroke-dashoffset:-14px}}\n@media (prefers-reduced-motion: reduce){.vp-flow{animation:none!important}}`}</style>\n      <div className=\"flex flex-wrap items-stretch gap-y-4\">\n        {steps.map((step, i) => (\n          <div key={step.name} className=\"flex items-center\">\n            <div className=\"vc-reveal w-[132px] border-2 border-[var(--vz-ink,#111)] px-3 py-2.5\">\n              <p className=\"text-[12px] font-bold leading-4\">{step.name}</p>\n              <p className=\"mt-1 text-[10.5px] leading-4 text-[var(--vz-muted,#8A8A8A)]\">\n                {step.desc}\n              </p>\n            </div>\n            {i < steps.length - 1 ? (\n              <svg width=\"44\" height=\"16\" className=\"shrink-0\">\n                <line\n                  x1=\"2\"\n                  y1=\"8\"\n                  x2=\"36\"\n                  y2=\"8\"\n                  stroke={accent}\n                  strokeWidth=\"2.5\"\n                  strokeDasharray=\"7 7\"\n                  className=\"vp-flow\"\n                  style={{ animation: 'vp-march 0.7s linear infinite' }}\n                />\n                <path d=\"M34 3 L42 8 L34 13 Z\" fill={accent} />\n              </svg>\n            ) : null}\n          </div>\n        ))}\n      </div>\n    </div>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "components/vizcn/pipeline-flow.tsx"
+    }
+  ],
+  "meta": {
+    "question": "What are the stages of this process, and in what order does work flow?",
+    "family": "illustration",
+    "whenToUse": "Explaining a linear multi-step process (ETL, CI, review pipeline) where order matters more than metrics.",
+    "antiUse": "Not for branching/looping flows or quantitative comparison between stages — no values are encoded."
+  }
+}
