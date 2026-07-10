@@ -57,7 +57,7 @@ export function ColumnChart({
         return (
           <div key={item.label} className="flex min-w-0 flex-1 flex-col items-center justify-end">
             <p
-              className={`mb-1.5 text-[13px] tabular-nums ${item.highlight ? 'font-bold' : 'font-semibold'}`}
+              className={`mb-1.5 text-[13px] tabular-nums text-[var(--vz-ink,#111)] ${item.highlight ? 'font-bold' : 'font-semibold'}`}
             >
               {item.valueLabel ?? item.value}
             </p>

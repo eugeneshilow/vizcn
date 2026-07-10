@@ -81,7 +81,7 @@ export function DumbbellRange({
             className="grid grid-cols-[150px_minmax(0,1fr)_120px] items-center gap-4"
           >
             <p
-              className={`truncate text-[13px] ${r.highlight ? 'font-bold' : 'font-medium text-[var(--vz-text3,#5C5C5C)]'}`}
+              className={`truncate text-[13px] ${r.highlight ? 'font-bold text-[var(--vz-ink,#111)]' : 'font-medium text-[var(--vz-text3,#5C5C5C)]'}`}
             >
               {r.label}
             </p>

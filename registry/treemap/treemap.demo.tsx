@@ -10,7 +10,7 @@ const VENDOR = {
 export default function TreemapDemo() {
   return (
     <div className="mx-auto max-w-[640px]">
-      <p className="mb-2 text-[13px] font-bold">Assistant usage share, Jun 2026</p>
+      <p className="mb-2 text-[13px] font-bold text-[var(--vz-ink,#111)]">Assistant usage share, Jun 2026</p>
       <Treemap
         rows={2}
         rowHeight={104}

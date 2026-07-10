@@ -60,7 +60,7 @@ export function RankBarChart({
           >
             <div className="min-w-0">
               <p
-                className={`truncate text-[13px] leading-5 ${item.highlight ? 'font-bold' : 'font-medium text-[var(--vz-text3,#5C5C5C)]'}`}
+                className={`truncate text-[13px] leading-5 ${item.highlight ? 'font-bold text-[var(--vz-ink,#111)]' : 'font-medium text-[var(--vz-text3,#5C5C5C)]'}`}
               >
                 {item.label}
               </p>
@@ -84,7 +84,7 @@ export function RankBarChart({
               />
             </div>
             <p
-              className={`text-right text-[13px] tabular-nums ${item.highlight ? 'font-bold' : 'font-medium text-[var(--vz-text3,#5C5C5C)]'}`}
+              className={`text-right text-[13px] tabular-nums ${item.highlight ? 'font-bold text-[var(--vz-ink,#111)]' : 'font-medium text-[var(--vz-text3,#5C5C5C)]'}`}
             >
               {item.valueLabel ?? `${item.value}${unit}`}
             </p>

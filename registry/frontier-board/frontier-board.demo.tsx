@@ -160,6 +160,7 @@ const METRICS = [
   { key: 'steps', label: 'Agent steps', axisLabel: 'Avg agent steps per task' },
 ]
 
+/** Primary: ascending X axis (Artificial Analysis genre). */
 export default function FrontierBoardDemo() {
   return (
     <FrontierBoard
@@ -168,12 +169,13 @@ export default function FrontierBoardDemo() {
       metrics={METRICS}
       yMax={80}
       meta="113 tasks · updated Jul 1, 2026 · data: DeepSWE leaderboard"
+      xAscending
     />
   )
 }
 
-/** Same board, ascending X axis (Artificial Analysis genre). */
-export function AADemo() {
+/** Second axis genre: inverted X (DeepSWE style — cheaper to the right). */
+export function InvertedDemo() {
   return (
     <FrontierBoard
       title="DeepSWE score"
@@ -181,7 +183,6 @@ export function AADemo() {
       metrics={METRICS}
       yMax={80}
       meta="113 tasks · updated Jul 1, 2026 · data: DeepSWE leaderboard"
-      xAscending
     />
   )
 }
