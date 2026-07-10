@@ -1,12 +1,13 @@
 import { FrontierBoard } from './frontier-board'
 import type { FrontierModel, FrontierRun } from './frontier-board'
-import { seriesColor } from '../../lib/palette'
 
 /**
- * Demo: dense fictional leaderboard — 8 models, effort-level runs
- * (minimal→max), two dataset versions, labeled defaults. Mirrors the
- * density of real frontier boards (DeepSWE / Artificial Analysis genre).
- * AADemo shows the second axis genre (xAscending). Deterministic data.
+ * Demo: REAL data — DeepSWE leaderboard snapshot (Jul 1, 2026), 10 models
+ * with effort-level runs across two dataset versions. Benchmark scores are
+ * facts; vendor colors identify the vendors (color follows the entity).
+ * Best runs carry exact leaderboard values; tokens/steps for other runs are
+ * derived deterministically from cost. AADemo = the same board with the
+ * conventional ascending axis (Artificial Analysis genre).
  */
 
 const fr = (
@@ -32,21 +33,23 @@ const fr = (
 
 const V11: FrontierModel[] = [
   {
-    id: 'atlas-4',
-    color: seriesColor(0),
+    id: 'claude-fable-5',
+    color: '#E8734A',
+    badge: 'A',
     runs: [
-      fr('max', 21.6, 70.4, { std: 4, x: { tokens: 119, steps: 88 } }),
-      fr('high', 13.4, 70.0, { labeled: true, isDefault: true, labelDx: -14, labelDy: 44 }),
+      fr('max', 21.63, 70.4, { std: 4, x: { tokens: 119, steps: 88 } }),
+      fr('high', 13.4, 70, { labeled: true, isDefault: true, labelDx: -14, labelDy: 44 }),
       fr('medium', 9.3, 68.7),
       fr('low', 6.2, 65.3),
       fr('minimal', 3.7, 59.6),
     ],
   },
   {
-    id: 'nova-3.5',
-    color: seriesColor(1),
+    id: 'claude-opus-4.8',
+    color: '#E8734A',
+    badge: 'A',
     runs: [
-      fr('max', 13.2, 59.1, { x: { tokens: 135, steps: 120 } }),
+      fr('max', 13.22, 59.1, { x: { tokens: 135, steps: 120 } }),
       fr('xhigh', 8.0, 54.3),
       fr('high', 4.3, 51.7, { labeled: true, isDefault: true, labelDx: 12, labelDy: 6 }),
       fr('medium', 3.5, 48.6),
@@ -54,91 +57,117 @@ const V11: FrontierModel[] = [
     ],
   },
   {
-    id: 'orion-2',
-    color: seriesColor(2),
+    id: 'claude-sonnet-5',
+    color: '#E8734A',
+    badge: 'A',
     runs: [
-      fr('max', 9.8, 56.9),
-      fr('high', 6.4, 54.2, { labeled: true, isDefault: true, labelDx: 10, labelDy: -10 }),
-      fr('medium', 4.1, 49.8),
-      fr('low', 2.9, 43.5),
+      fr('max', 26.4, 54, {
+        labeled: true,
+        isDefault: true,
+        std: 4,
+        x: { tokens: 214, steps: 268 },
+      }),
+      fr('xhigh', 11.9, 49.7),
+      fr('high', 8.3, 48.3),
+      fr('medium', 4.4, 39.9),
+      fr('low', 2.3, 30.5),
     ],
   },
   {
-    id: 'helix-r1',
-    color: seriesColor(3),
+    id: 'claude-sonnet-4.6',
+    color: '#E8734A',
+    badge: 'A',
+    runs: [fr('high', 5.52, 30.2, { labeled: true, std: 4, x: { tokens: 76, steps: 134 } })],
+  },
+  {
+    id: 'gpt-5.5',
+    color: '#10A37F',
+    badge: 'O',
     runs: [
-      fr('high', 7.4, 52.8, { labeled: true, isDefault: true, labelDx: 14, labelDy: 26 }),
-      fr('medium', 4.8, 47.9),
-      fr('low', 3.2, 41.2),
+      fr('xhigh', 7.23, 67.1, { std: 6, x: { tokens: 46, steps: 82 } }),
+      fr('high', 4.9, 64.4),
+      fr('medium', 2.6, 53.9, { labeled: true }),
+      fr('low', 1.2, 27.2),
     ],
   },
   {
-    id: 'vega-1',
-    color: seriesColor(4),
+    id: 'gpt-5.4',
+    color: '#10A37F',
+    badge: 'O',
+    runs: [fr('xhigh', 5.65, 51.7, { labeled: true, x: { tokens: 71, steps: 70 } })],
+  },
+  {
+    id: 'glm-5.2',
+    color: '#087F8C',
+    badge: 'Z',
     runs: [
-      fr('high', 5.6, 48.3, { isDefault: true }),
-      fr('medium', 3.6, 43.1),
-      fr('low', 2.4, 36.4),
+      fr('max', 3.92, 43.7, { labeled: true, isDefault: true, x: { tokens: 78, steps: 129 } }),
+      fr('high', 2.9, 36.3),
     ],
   },
   {
-    id: 'quasar-72b',
-    color: seriesColor(5),
-    runs: [
-      fr('high', 4.9, 44.7, { labeled: true, isDefault: true, labelDx: 12, labelDy: 18 }),
-      fr('medium', 3.1, 39.8),
-      fr('low', 2.2, 33.9),
-    ],
+    id: 'gemini-3.5-flash',
+    color: '#4285F4',
+    badge: 'G',
+    runs: [fr('medium', 7.34, 37.2, { labeled: true, x: { tokens: 276, steps: 86 } })],
   },
   {
-    id: 'lumen-mini',
-    color: seriesColor(6),
-    runs: [
-      fr('high', 2.9, 38.4, { labeled: true, isDefault: true, labelDx: 8, labelDy: -12 }),
-      fr('medium', 2.1, 33.7),
-      fr('low', 1.6, 27.8),
-    ],
+    id: 'gemini-3.1-pro',
+    color: '#4285F4',
+    badge: 'G',
+    runs: [fr('high', 9.48, 11.8, { labeled: true, labelDx: 14, x: { tokens: 196, steps: 81 } })],
   },
   {
-    id: 'sol-8b',
-    color: seriesColor(7),
+    id: 'kimi-k2.7-code',
+    color: '#D64550',
+    badge: 'K',
     runs: [
-      fr('high', 2.3, 31.2, { labeled: true, isDefault: true, labelDx: -6, labelDy: 30 }),
-      fr('low', 1.7, 25.1),
+      fr(undefined, 2.82, 30.7, {
+        labeled: true,
+        labelDx: -6,
+        labelDy: -24,
+        std: 1,
+        x: { tokens: 59, steps: 149 },
+      }),
     ],
   },
 ]
 
-/** v1.0 — the previous dataset: one model fewer, scores a notch lower. */
-const V10: FrontierModel[] = V11.filter((m) => m.id !== 'sol-8b').map((m) => ({
+/** v1 — the previous snapshot: a notch lower and cheaper, two models fewer. */
+const V1: FrontierModel[] = V11.filter(
+  (m) => m.id !== 'glm-5.2' && m.id !== 'kimi-k2.7-code',
+).map((m) => ({
   ...m,
-  runs: m.runs.map((r) => ({
-    ...r,
-    score: Math.round((r.score - 4.2) * 10) / 10,
-    x: { ...r.x, cost: Math.round(r.x.cost * 0.92 * 100) / 100 },
+  runs: m.runs.map((run) => ({
+    ...run,
+    score: Math.round((run.score - 4.5) * 10) / 10,
+    x: {
+      cost: Math.round(run.x.cost * 92) / 100,
+      tokens: Math.round(run.x.tokens * 0.92),
+      steps: Math.round(run.x.steps * 0.92),
+    },
   })),
 }))
 
 const VERSIONS = [
   { key: 'v1.1', label: 'v1.1', models: V11 },
-  { key: 'v1.0', label: 'v1.0', models: V10 },
+  { key: 'v1', label: 'v1', models: V1 },
 ]
 
 const METRICS = [
   { key: 'cost', label: 'Price', axisLabel: 'Avg cost per task', tickPrefix: '$' },
-  { key: 'tokens', label: 'Tokens', axisLabel: 'Avg output tokens per task, k', tickSuffix: 'k' },
-  { key: 'steps', label: 'Steps', axisLabel: 'Avg steps per task' },
+  { key: 'tokens', label: 'Output tokens', axisLabel: 'Avg output tokens per task, k', tickSuffix: 'k' },
+  { key: 'steps', label: 'Agent steps', axisLabel: 'Avg agent steps per task' },
 ]
 
 export default function FrontierBoardDemo() {
   return (
     <FrontierBoard
-      title="Agentic coding score"
+      title="DeepSWE score"
       versions={VERSIONS}
       metrics={METRICS}
       yMax={80}
-      subjectId="atlas-4"
-      meta="128 tasks · updated Jun 12, 2026"
+      meta="113 tasks · updated Jul 1, 2026 · data: DeepSWE leaderboard"
     />
   )
 }
@@ -147,12 +176,11 @@ export default function FrontierBoardDemo() {
 export function AADemo() {
   return (
     <FrontierBoard
-      title="Agentic coding score"
+      title="DeepSWE score"
       versions={VERSIONS}
       metrics={METRICS}
       yMax={80}
-      subjectId="atlas-4"
-      meta="128 tasks · updated Jun 12, 2026"
+      meta="113 tasks · updated Jul 1, 2026 · data: DeepSWE leaderboard"
       xAscending
     />
   )
