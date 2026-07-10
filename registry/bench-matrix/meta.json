@@ -1,0 +1,11 @@
+{
+  "name": "bench-matrix",
+  "title": "Bench Matrix",
+  "description": "Vendor-announcement style benchmark board: benchmark rows grouped by domain vs model columns, with a tinted hero column and bold best-in-row plates.",
+  "question": "How do these models compare across many benchmarks at once?",
+  "family": "matrix",
+  "whenToUse": "Comparing a handful of models across many named benchmarks in one glance, especially when one model is the protagonist.",
+  "antiUse": "Trends over time or more than ~6 models — use a time-series form or a ranking board instead of a wide table.",
+  "client": true,
+  "props": "models (id, label, vendor?, color?, hero? — hero color must be a 6-digit hex, tint is built by hex+alpha concat), groups (label + rows {bench, note?, values: (number|null)[], decimals?}), meta?, footnote?, decimals?=1, benchColLabel?='benchmark'"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "frontier-board",
+  "title": "Frontier Board",
+  "description": "Interactive score-vs-cost scatter where each model's effort levels connect into an efficiency frontier line, with metric/version toggles, model filter, and hover focus.",
+  "question": "Which model delivers the most score per dollar (or token), and at what effort level?",
+  "family": "ranking",
+  "whenToUse": "Comparing models on a quality-vs-cost tradeoff when each model has multiple runs (effort levels / modes) that form a frontier.",
+  "antiUse": "Needs >=2 runs per model to draw frontier lines; single-point-per-model data reads better as rank-bars.",
+  "client": true,
+  "props": "title, versions[] (datasets of models with runs), metrics[] (X-axis toggles with tickPrefix/Suffix), yMax/yTickSuffix, subjectId highlight, UI label strings"
+}

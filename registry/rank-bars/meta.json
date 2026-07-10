@@ -1,0 +1,11 @@
+{
+  "name": "rank-bars",
+  "title": "Rank Bars",
+  "description": "Horizontal ranking bars — label, zero-based bar, value — with an accent-highlighted hero row.",
+  "question": "Who leads this ranking, and by how much?",
+  "family": "ranking",
+  "whenToUse": "Comparing one metric across a handful of named entities where order and gaps matter (leaderboards, price ladders).",
+  "antiUse": "Not for time series, part-to-whole composition, or more than ~10 rows — use a table or sparklines instead.",
+  "client": false,
+  "props": "items: {label, value, valueLabel?, sub?, highlight?, color?}[]; maxValue?; unit?; highlightColor? (default seriesColor(0))"
+}

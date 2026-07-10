@@ -1,0 +1,11 @@
+{
+  "name": "pipeline-flow",
+  "title": "Pipeline Flow",
+  "description": "Horizontal chain of stage boxes linked by animated marching-ants arrows.",
+  "question": "What are the stages of this process, and in what order does work flow?",
+  "family": "illustration",
+  "whenToUse": "Explaining a linear multi-step process (ETL, CI, review pipeline) where order matters more than metrics.",
+  "antiUse": "Not for branching/looping flows or quantitative comparison between stages — no values are encoded.",
+  "client": false,
+  "props": "steps: {name, desc}[] ordered stages; accent?: string arrow color (default seriesColor(0))"
+}

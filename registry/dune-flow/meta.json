@@ -1,0 +1,11 @@
+{
+  "name": "dune-flow",
+  "title": "Dune Flow",
+  "description": "Smooth B-spline stacked area flow showing what a stream was made of and when the waves came.",
+  "question": "What made up the flow over time, and when were the waves?",
+  "family": "time-series",
+  "whenToUse": "Daily composition of a volume stream (issues by priority, requests by tier) where the trend shape matters more than exact per-day spikes.",
+  "antiUse": "When readers must read exact values off the chart — the B-spline deliberately does not pass through the data points (raw values live only in the tooltip).",
+  "client": true,
+  "props": "days: ISO 'YYYY-MM-DD'[] (min 4); series: { label, color?, values: (number|null)[] }[] stacked bottom-up; yLabel?: string"
+}

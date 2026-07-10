@@ -1,0 +1,11 @@
+{
+  "name": "stacked-activity",
+  "title": "Stacked Activity Bars",
+  "description": "Interactive stacked daily columns with a live legend that doubles as the tooltip; the last, incomplete day is hatched.",
+  "question": "What makes up each day's volume, and how does it breathe day to day?",
+  "family": "time-series",
+  "whenToUse": "Daily volume split into 2-4 additive parts over weeks of data, where per-day composition matters as much as the trend.",
+  "antiUse": "Comparing exact values of individual segments across days (inner segments have no common baseline) or fewer than 5 days.",
+  "client": true,
+  "props": "days: ISO date strings; segments: {key,label,color,values[]} bottom-up; unit?; note?; partialLast?; partialNote?"
+}

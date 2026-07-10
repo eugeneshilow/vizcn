@@ -1,0 +1,11 @@
+{
+  "name": "waffle-grid",
+  "title": "Waffle Grid",
+  "description": "A 10x10 waffle grid rendering \"N of 100\" as countable filled cells with a bold readout and caption.",
+  "question": "How big is this share of the whole, really?",
+  "family": "composition",
+  "whenToUse": "Making a single percentage feel tangible — one share of one whole, where counting units beats reading a number.",
+  "antiUse": "Not for comparing several shares, time trends, or non-percentage values — use rank bars or a distribution bar instead.",
+  "client": false,
+  "props": "value: number (0-100 cells filled); color? (default seriesColor(0)); caption: string"
+}
