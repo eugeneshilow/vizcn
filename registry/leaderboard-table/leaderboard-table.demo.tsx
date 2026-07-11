@@ -1,6 +1,15 @@
 import { LeaderboardBars } from './leaderboard-table'
 import type { LeaderboardModel, LeaderboardRun } from './leaderboard-table'
-import { seriesColor } from '../../lib/palette'
+
+// vendor identity colors (color follows the entity): a vivid set that
+// holds on both light and dark surfaces — same rail as frontier-board
+const FAMILY_COLOR = {
+  atlas: '#E8734A',
+  nova: '#10A37F',
+  orion: '#4285F4',
+  vega: '#D946EF',
+  quasar: '#5B6EE1',
+} as const
 
 /**
  * Demo: fictional models with real-leaderboard density — the same data
@@ -32,7 +41,7 @@ const lr = (
 const V11: LeaderboardModel[] = [
   {
     id: 'atlas-4',
-    color: seriesColor(0),
+    color: FAMILY_COLOR.atlas,
     badge: 'M',
     runs: [
       lr('max', 21.63, 70.4, { std: 4, x: { tokens: 119, steps: 88 } }),
@@ -44,7 +53,7 @@ const V11: LeaderboardModel[] = [
   },
   {
     id: 'atlas-3.5',
-    color: seriesColor(0),
+    color: FAMILY_COLOR.atlas,
     badge: 'M',
     runs: [
       lr('max', 13.22, 59.1, { x: { tokens: 135, steps: 120 } }),
@@ -56,7 +65,7 @@ const V11: LeaderboardModel[] = [
   },
   {
     id: 'atlas-3',
-    color: seriesColor(0),
+    color: FAMILY_COLOR.atlas,
     badge: 'M',
     runs: [
       lr('max', 26.4, 54, { std: 4, x: { tokens: 214, steps: 268 } }),
@@ -68,13 +77,13 @@ const V11: LeaderboardModel[] = [
   },
   {
     id: 'atlas-2',
-    color: seriesColor(0),
+    color: FAMILY_COLOR.atlas,
     badge: 'M',
     runs: [lr('high', 5.52, 30.2, { std: 4, x: { tokens: 76, steps: 134 } })],
   },
   {
     id: 'nova-5',
-    color: seriesColor(1),
+    color: FAMILY_COLOR.nova,
     badge: 'H',
     runs: [
       lr('xhigh', 7.23, 67.1, { std: 6, x: { tokens: 46, steps: 82 } }),
@@ -85,13 +94,13 @@ const V11: LeaderboardModel[] = [
   },
   {
     id: 'nova-4',
-    color: seriesColor(1),
+    color: FAMILY_COLOR.nova,
     badge: 'H',
     runs: [lr('xhigh', 5.65, 51.7, { x: { tokens: 71, steps: 70 } })],
   },
   {
     id: 'orion-72b',
-    color: seriesColor(2),
+    color: FAMILY_COLOR.orion,
     badge: 'V',
     runs: [
       lr('max', 3.92, 43.7, { x: { tokens: 78, steps: 129 } }),
@@ -100,19 +109,19 @@ const V11: LeaderboardModel[] = [
   },
   {
     id: 'vega-flash',
-    color: seriesColor(3),
+    color: FAMILY_COLOR.vega,
     badge: 'S',
     runs: [lr('medium', 7.34, 37.2, { x: { tokens: 276, steps: 86 } })],
   },
   {
     id: 'vega-pro',
-    color: seriesColor(3),
+    color: FAMILY_COLOR.vega,
     badge: 'S',
     runs: [lr('high', 9.48, 11.8, { x: { tokens: 196, steps: 81 } })],
   },
   {
     id: 'quasar-coder',
-    color: seriesColor(5),
+    color: FAMILY_COLOR.quasar,
     badge: 'Q',
     runs: [lr(undefined, 2.82, 30.7, { std: 1, x: { tokens: 59, steps: 149 } })],
   },

@@ -1,6 +1,15 @@
 import { FrontierBoard } from './frontier-board'
 import type { FrontierModel, FrontierRun } from './frontier-board'
-import { seriesColor } from '../../lib/palette'
+
+// vendor identity colors (color follows the entity): a vivid set that
+// holds on both light and dark surfaces
+const FAMILY_COLOR = {
+  atlas: '#E8734A',
+  nova: '#10A37F',
+  orion: '#4285F4',
+  vega: '#D946EF',
+  quasar: '#5B6EE1',
+} as const
 
 /**
  * Demo: fictional models with real-leaderboard density — 10 models across
@@ -33,7 +42,7 @@ const fr = (
 const V11: FrontierModel[] = [
   {
     id: 'atlas-4',
-    color: seriesColor(0),
+    color: FAMILY_COLOR.atlas,
     badge: 'M',
     runs: [
       fr('max', 21.63, 70.4, { std: 4, x: { tokens: 119, steps: 88 } }),
@@ -45,7 +54,7 @@ const V11: FrontierModel[] = [
   },
   {
     id: 'atlas-3.5',
-    color: seriesColor(0),
+    color: FAMILY_COLOR.atlas,
     badge: 'M',
     runs: [
       fr('max', 13.22, 59.1, { x: { tokens: 135, steps: 120 } }),
@@ -57,7 +66,7 @@ const V11: FrontierModel[] = [
   },
   {
     id: 'atlas-3',
-    color: seriesColor(0),
+    color: FAMILY_COLOR.atlas,
     badge: 'M',
     runs: [
       fr('max', 26.4, 54, {
@@ -74,13 +83,13 @@ const V11: FrontierModel[] = [
   },
   {
     id: 'atlas-2',
-    color: seriesColor(0),
+    color: FAMILY_COLOR.atlas,
     badge: 'M',
     runs: [fr('high', 5.52, 30.2, { labeled: true, std: 4, x: { tokens: 76, steps: 134 } })],
   },
   {
     id: 'nova-5',
-    color: seriesColor(1),
+    color: FAMILY_COLOR.nova,
     badge: 'H',
     runs: [
       fr('xhigh', 7.23, 67.1, { std: 6, x: { tokens: 46, steps: 82 } }),
@@ -91,13 +100,13 @@ const V11: FrontierModel[] = [
   },
   {
     id: 'nova-4',
-    color: seriesColor(1),
+    color: FAMILY_COLOR.nova,
     badge: 'H',
     runs: [fr('xhigh', 5.65, 51.7, { labeled: true, labelDx: 16, labelDy: 20, x: { tokens: 71, steps: 70 } })],
   },
   {
     id: 'orion-72b',
-    color: seriesColor(2),
+    color: FAMILY_COLOR.orion,
     badge: 'V',
     runs: [
       fr('max', 3.92, 43.7, { labeled: true, isDefault: true, x: { tokens: 78, steps: 129 } }),
@@ -106,19 +115,19 @@ const V11: FrontierModel[] = [
   },
   {
     id: 'vega-flash',
-    color: seriesColor(3),
+    color: FAMILY_COLOR.vega,
     badge: 'S',
     runs: [fr('medium', 7.34, 37.2, { labeled: true, x: { tokens: 276, steps: 86 } })],
   },
   {
     id: 'vega-pro',
-    color: seriesColor(3),
+    color: FAMILY_COLOR.vega,
     badge: 'S',
     runs: [fr('high', 9.48, 11.8, { labeled: true, labelDx: 14, x: { tokens: 196, steps: 81 } })],
   },
   {
     id: 'quasar-coder',
-    color: seriesColor(5),
+    color: FAMILY_COLOR.quasar,
     badge: 'Q',
     runs: [
       fr(undefined, 2.82, 30.7, {
