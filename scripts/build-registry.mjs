@@ -141,6 +141,12 @@ writeFileSync(
 )
 writeFileSync(join(root, 'catalog.json'), JSON.stringify({ name: cfg.name, shelf: cfg.shelfUrl, forms: catalog }, null, 2))
 
+// ---- cli/shelf.json: URLs for the pointer CLI (npx vizcn) ----
+writeFileSync(
+  join(root, 'cli/shelf.json'),
+  JSON.stringify({ shelfUrl: cfg.shelfUrl, registryBase: BASE }, null, 2) + '\n',
+)
+
 // ---- llms.txt: plain-text index for LLM crawlers ----
 const llmsForms = catalog
   .map((c) => `- ${c.name} — ${c.question} · install: ${c.install}`)
@@ -153,6 +159,7 @@ Copy-paste SVG data-viz forms an AI coding agent assembles from a catalog. No ch
 ${catalog.length} forms; each declares the question it answers, whenToUse, and antiUse.
 Catalog (machine-readable): ${cfg.shelfUrl}/catalog.json
 Install: npx shadcn@latest add ${BASE}/<name>.json
+Or: npx ${cfg.name} add <name> (pointer CLI; \`npx ${cfg.name} prompt\` prints an agent-ready prompt)
 Repo: https://github.com/${cfg.author}/${cfg.name}
 
 ## Forms

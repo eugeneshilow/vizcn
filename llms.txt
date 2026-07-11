@@ -4,6 +4,7 @@ Copy-paste SVG data-viz forms an AI coding agent assembles from a catalog. No ch
 11 forms; each declares the question it answers, whenToUse, and antiUse.
 Catalog (machine-readable): https://vibecoding.tech/vizcn/catalog.json
 Install: npx shadcn@latest add https://vibecoding.tech/vizcn/r/<name>.json
+Or: npx vizcn add <name> (pointer CLI; `npx vizcn prompt` prints an agent-ready prompt)
 Repo: https://github.com/eugeneshilow/vizcn
 
 ## Forms

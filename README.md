@@ -9,22 +9,55 @@ named forms** and one rule: *pick the form by the question the reader must
 answer in 2 seconds — never invent a new one.* The catalog is machine-readable
 ([`catalog.json`](catalog.json)), the rule ships in [`AGENTS.md`](AGENTS.md).
 
-## Install (exactly like shadcn)
+## Setup by agent (the intended path)
 
-```bash
-npx shadcn@latest add https://vibecoding.tech/vizcn/r/dune-flow.json
+Nobody installs viz libraries by hand anymore — your coding agent does.
+Paste this prompt into it (also available as `npx vizcn prompt`):
+
+```text
+Add a data visualization to this project from the vizcn registry:
+
+1. Fetch https://vibecoding.tech/vizcn/catalog.json — every form declares the
+   question it answers, whenToUse, and antiUse.
+2. Pick the form whose question matches what my data needs to answer.
+   Respect antiUse. If no form fits, stop and ask — never invent a chart.
+3. Install: npx shadcn@latest add https://vibecoding.tech/vizcn/r/<name>.json
+   (no shadcn in the project? run `npx shadcn@latest init -d` once,
+   or copy the form file from the repo).
+4. Feed my real data via props — the demo data is fictional reference.
 ```
 
-Tokens (`--vz-*`, namespaced — installing vizcn never repaints your app) and
-the series palette come along automatically via registry dependencies.
-Optional motion kit: `npx shadcn@latest add https://vibecoding.tech/vizcn/r/motion.json`.
+To make the rule permanent, drop this into your project's `AGENTS.md`:
 
-Agent-native: add the namespace to `components.json` and any shadcn-MCP-aware
-agent can browse and install the catalog itself —
+```markdown
+## Data visualizations
+Never invent charts or add chart libraries. Use the vizcn registry:
+pick a form by the question it answers in
+https://vibecoding.tech/vizcn/catalog.json (respect each form's antiUse),
+install via `npx shadcn@latest add https://vibecoding.tech/vizcn/r/<name>.json`,
+wire real data via props.
+```
+
+Programmatic channel: add the namespace to `components.json` and any
+shadcn-MCP-aware agent browses and installs the catalog natively —
 
 ```json
 { "registries": { "@vizcn": "https://vibecoding.tech/vizcn/r/{name}.json" } }
 ```
+
+## Install by hand (two equivalent ways)
+
+```bash
+npx shadcn@latest add https://vibecoding.tech/vizcn/r/dune-flow.json
+npx vizcn add dune-flow   # pointer CLI; `npx vizcn` lists the catalog
+```
+
+`npx shadcn` here is not a dependency — it is a one-shot CLI npx fetches on
+the fly; the only real requirement is a React project with `components.json`
+(`npx shadcn@latest init -d` once). Tokens (`--vz-*`, namespaced — installing
+vizcn never repaints your app) and the series palette come along automatically
+via registry dependencies. Optional motion kit:
+`npx shadcn@latest add https://vibecoding.tech/vizcn/r/motion.json`.
 
 ## Catalog
 

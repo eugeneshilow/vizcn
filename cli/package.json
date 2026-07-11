@@ -1,0 +1,14 @@
+{
+  "name": "vizcn",
+  "version": "0.1.0",
+  "description": "Agent-first SVG viz registry — pointer CLI. The registry lives at https://vibecoding.tech/vizcn: copy-paste forms an AI coding agent picks from a catalog by the question the data answers.",
+  "license": "MIT",
+  "type": "module",
+  "bin": { "vizcn": "./bin.mjs" },
+  "files": ["bin.mjs", "shelf.json", "README.md"],
+  "engines": { "node": ">=18" },
+  "repository": "github:eugeneshilow/vizcn",
+  "homepage": "https://vibecoding.tech/vizcn",
+  "author": "Evgeny Shilov (https://github.com/eugeneshilow)",
+  "keywords": ["shadcn", "registry", "svg", "dataviz", "charts", "agent", "ai", "vizcn"]
+}
