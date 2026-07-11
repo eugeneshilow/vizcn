@@ -1,8 +1,15 @@
 # vizcn
 
+[![npm](https://img.shields.io/npm/v/vizcn)](https://www.npmjs.com/package/vizcn)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
 **An SVG viz registry built for coding agents first.** Copy-paste forms your
 AI agent assembles from a catalog — shadcn-style, zero chart libraries
 (no d3, no recharts: every form is hand-drawn inline SVG).
+
+![All 11 forms live on the shelf: crosshair tooltips, hover legends, axis toggles](docs/hero.gif)
+
+Live shelf with every form rendered: **[vibecoding.tech/vizcn](https://vibecoding.tech/vizcn)**
 
 Instead of teaching your agent to invent charts, give it a **catalog of
 named forms** and one rule: *pick the form by the question the reader must
