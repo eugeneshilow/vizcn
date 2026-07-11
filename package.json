@@ -1,6 +1,7 @@
 {
   "name": "vizcn",
   "private": true,
+  "license": "MIT",
   "version": "0.1.0",
   "description": "Agent-first SVG viz registry — copy-paste forms an AI agent assembles from a catalog. No chart lib.",
   "type": "module",

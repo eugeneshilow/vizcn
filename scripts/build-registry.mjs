@@ -9,6 +9,7 @@
  *   r/motion.json   — optional motion CSS (registry:file)
  *   r/registry.json — root index
  *   catalog.json    — the agent-facing catalog (question/family/when/anti)
+ *   llms.txt        — plain-text index for LLM crawlers (forms + install URLs)
  *   README.md       — catalog table refreshed between <!-- catalog --> markers
  *
  * Sources never hardcode shelf URLs (injection invariant): forks edit
@@ -21,8 +22,8 @@ const root = new URL('..', import.meta.url).pathname
 const cfg = JSON.parse(readFileSync(join(root, 'registry.config.json'), 'utf8'))
 const BASE = cfg.registryBase.replace(/\/$/, '')
 const outDir = join(root, 'r')
-// r/ — полностью производная папка: чистим перед сборкой, иначе JSON
-// удалённых форм переживают перекройку состава
+// r/ is fully derived: wipe before build, otherwise JSONs of removed
+// forms survive catalog recuts
 rmSync(outDir, { recursive: true, force: true })
 mkdirSync(outDir, { recursive: true })
 
@@ -140,6 +141,26 @@ writeFileSync(
 )
 writeFileSync(join(root, 'catalog.json'), JSON.stringify({ name: cfg.name, shelf: cfg.shelfUrl, forms: catalog }, null, 2))
 
+// ---- llms.txt: plain-text index for LLM crawlers ----
+const llmsForms = catalog
+  .map((c) => `- ${c.name} — ${c.question} · install: ${c.install}`)
+  .join('\n')
+writeFileSync(
+  join(root, 'llms.txt'),
+  `# ${cfg.name} — agent-first SVG viz registry
+
+Copy-paste SVG data-viz forms an AI coding agent assembles from a catalog. No chart libraries.
+${catalog.length} forms; each declares the question it answers, whenToUse, and antiUse.
+Catalog (machine-readable): ${cfg.shelfUrl}/catalog.json
+Install: npx shadcn@latest add ${BASE}/<name>.json
+Repo: https://github.com/${cfg.author}/${cfg.name}
+
+## Forms
+
+${llmsForms}
+`,
+)
+
 // ---- README catalog table between markers ----
 const readmePath = join(root, 'README.md')
 if (existsSync(readmePath)) {
@@ -154,4 +175,4 @@ if (existsSync(readmePath)) {
   )
 }
 
-console.log(`built ${names.length} forms + theme/palette/motion → r/ · catalog.json · README table (base: ${BASE})`)
+console.log(`built ${names.length} forms + theme/palette/motion → r/ · catalog.json · llms.txt · README table (base: ${BASE})`)

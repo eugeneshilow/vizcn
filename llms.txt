@@ -1,0 +1,21 @@
+# vizcn — agent-first SVG viz registry
+
+Copy-paste SVG data-viz forms an AI coding agent assembles from a catalog. No chart libraries.
+11 forms; each declares the question it answers, whenToUse, and antiUse.
+Catalog (machine-readable): https://vibecoding.tech/vizcn/catalog.json
+Install: npx shadcn@latest add https://vibecoding.tech/vizcn/r/<name>.json
+Repo: https://github.com/eugeneshilow/vizcn
+
+## Forms
+
+- bench-matrix — How do these models compare across many benchmarks at once? · install: https://vibecoding.tech/vizcn/r/bench-matrix.json
+- delta-bars — Who is ahead today, and by how much? · install: https://vibecoding.tech/vizcn/r/delta-bars.json
+- dumbbell-range — How far apart are the two values per row, and who sits where? · install: https://vibecoding.tech/vizcn/r/dumbbell-range.json
+- dune-flow — What made up the flow over time, and when were the waves? · install: https://vibecoding.tech/vizcn/r/dune-flow.json
+- frontier-board — Which model delivers the most score per dollar (or token), and at what effort level? · install: https://vibecoding.tech/vizcn/r/frontier-board.json
+- heat-strip — Is this thing alive — how did its activity move over the last year? · install: https://vibecoding.tech/vizcn/r/heat-strip.json
+- leaderboard-table — Who leads on score, with what confidence spread, and what does that score cost? · install: https://vibecoding.tech/vizcn/r/leaderboard-table.json
+- rank-bars — Who leads this ranking, and by how much? · install: https://vibecoding.tech/vizcn/r/rank-bars.json
+- stacked-activity — What makes up each day's volume, and how does it breathe day to day? · install: https://vibecoding.tech/vizcn/r/stacked-activity.json
+- treemap — How is the whole split up, and who dominates? · install: https://vibecoding.tech/vizcn/r/treemap.json
+- value-columns — How do these few values stack up side by side? · install: https://vibecoding.tech/vizcn/r/value-columns.json
