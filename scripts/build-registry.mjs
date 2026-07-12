@@ -4,7 +4,7 @@
  * Reads registry/<name>/{meta.json,<name>.tsx} + lib/palette.ts + theme.css
  * and emits, with the base URL injected from registry.config.json:
  *   r/<name>.json   — shadcn registry-item (component, absolute-URL deps)
- *   r/theme.json    — cssVars (light/dark) parsed from theme.css
+ *   r/theme.json    — cssVars (light/dark) + terminal class parsed from theme.css
  *   r/palette.json  — lib item (series palette, installed to lib/vizcn-palette.ts)
  *   r/motion.json   — optional motion CSS (registry:file)
  *   r/registry.json — root index
@@ -36,16 +36,23 @@ function parseVars(block) {
   for (const [, k, v] of m[1].matchAll(/--(vz-[\w-]+):\s*([^;]+);/g)) vars[k] = v.trim()
   return vars
 }
+const terminalVars = parseVars(/\.vz-terminal\s*{([\s\S]*?)}/)
 const themeItem = {
   $schema: 'https://ui.shadcn.com/schema/registry-item.json',
   name: 'theme',
   type: 'registry:theme',
   title: 'vizcn theme tokens',
   description:
-    'Structural --vz-* tokens (light + dark). Namespaced: installing vizcn never repaints your app.',
+    'Structural --vz-* tokens (light + dark + terminal). Namespaced: installing vizcn never repaints your app.',
   cssVars: {
     light: parseVars(/:root\s*{([\s\S]*?)}/),
     dark: parseVars(/\.vz-dark\s*{([\s\S]*?)}/),
+  },
+  css: {
+    '.vz-terminal': {
+      ...Object.fromEntries(Object.entries(terminalVars).map(([key, value]) => [`--${key}`, value])),
+      'color-scheme': 'dark',
+    },
   },
 }
 writeFileSync(join(outDir, 'theme.json'), JSON.stringify(themeItem, null, 2))

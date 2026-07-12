@@ -11,8 +11,10 @@
  * depend on it via registryDependencies, so `npx shadcn add` injects them
  * automatically. Manual setup: copy this file into your global CSS.
  *
- * Dark tone: wrap a subtree in .vz-dark; .vz-scene is a near-black hero
- * stage. Swap values to re-skin every form at once.
+ * Dark tone: wrap a subtree in .vz-dark (mapped to the consumer's .dark by
+ * the registry); .vz-terminal is a dense terminal-style dark register.
+ * .vz-scene is a near-black hero stage. Swap values to re-skin every form
+ * at once.
  */
 :root {
   --vz-surface: #ffffff;
@@ -49,6 +51,27 @@
   --vz-chip-ink: #111111;
   --vz-ring: #0e0e11;
   --vz-hover: #16161a;
+  color-scheme: dark;
+}
+.vz-terminal {
+  --vz-surface: #111111;
+  --vz-frame: rgba(255, 255, 255, 0.12);
+  --vz-grid: rgba(255, 255, 255, 0.07);
+  --vz-axis: rgba(255, 255, 255, 0.22);
+  --vz-track: rgba(255, 255, 255, 0.05);
+  --vz-ink: rgba(255, 255, 255, 0.94);
+  --vz-text2: rgba(255, 255, 255, 0.78);
+  --vz-text3: rgba(255, 255, 255, 0.62);
+  --vz-muted: rgba(255, 255, 255, 0.52);
+  --vz-muted2: rgba(255, 255, 255, 0.44);
+  --vz-chip: #ff7a1a;
+  --vz-chip-ink: #111111;
+  --vz-ring: #111111;
+  --vz-hover: rgba(255, 255, 255, 0.08);
+  /* semantic status scale — verdict by magnitude */
+  --vz-good: #4ade80;
+  --vz-mid: #ff7a1a;
+  --vz-bad: #f87171;
   color-scheme: dark;
 }
 .vz-scene {

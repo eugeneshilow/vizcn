@@ -87,9 +87,17 @@ via registry dependencies. Optional motion kit:
 ## Usage
 
 Data goes in via props; every component ships with a deterministic demo
-(`registry/<name>/<name>.demo.tsx`). Dark tone: tokens flip with your `.dark`
-class. Colors follow your entities — pass `color` per series, or the neutral
-palette steps in.
+(`registry/<name>/<name>.demo.tsx`). Colors follow your entities — pass `color`
+per series, or the neutral palette steps in.
+
+### Themes
+
+The registry dependency installs the namespaced `--vz-*` tokens automatically.
+Light is the default; put `.dark` on the app root for the standard dark tone,
+or `.vz-terminal` on the root/subtree for the strict terminal register
+(`#111111` surface, amber controls, bright status colors). For manual setup,
+copy `theme.css` into global CSS; its source-level standard-dark selector is
+`.vz-dark`, while `.vz-terminal` is unchanged.
 
 ## Maintenance
 

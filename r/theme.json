@@ -3,7 +3,7 @@
   "name": "theme",
   "type": "registry:theme",
   "title": "vizcn theme tokens",
-  "description": "Structural --vz-* tokens (light + dark). Namespaced: installing vizcn never repaints your app.",
+  "description": "Structural --vz-* tokens (light + dark + terminal). Namespaced: installing vizcn never repaints your app.",
   "cssVars": {
     "light": {
       "vz-surface": "#ffffff",
@@ -39,6 +39,28 @@
       "vz-chip-ink": "#111111",
       "vz-ring": "#0e0e11",
       "vz-hover": "#16161a"
+    }
+  },
+  "css": {
+    ".vz-terminal": {
+      "--vz-surface": "#111111",
+      "--vz-frame": "rgba(255, 255, 255, 0.12)",
+      "--vz-grid": "rgba(255, 255, 255, 0.07)",
+      "--vz-axis": "rgba(255, 255, 255, 0.22)",
+      "--vz-track": "rgba(255, 255, 255, 0.05)",
+      "--vz-ink": "rgba(255, 255, 255, 0.94)",
+      "--vz-text2": "rgba(255, 255, 255, 0.78)",
+      "--vz-text3": "rgba(255, 255, 255, 0.62)",
+      "--vz-muted": "rgba(255, 255, 255, 0.52)",
+      "--vz-muted2": "rgba(255, 255, 255, 0.44)",
+      "--vz-chip": "#ff7a1a",
+      "--vz-chip-ink": "#111111",
+      "--vz-ring": "#111111",
+      "--vz-hover": "rgba(255, 255, 255, 0.08)",
+      "--vz-good": "#4ade80",
+      "--vz-mid": "#ff7a1a",
+      "--vz-bad": "#f87171",
+      "color-scheme": "dark"
     }
   }
 }

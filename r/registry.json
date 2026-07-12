@@ -7,7 +7,7 @@
       "name": "theme",
       "type": "registry:theme",
       "title": "vizcn theme tokens",
-      "description": "Structural --vz-* tokens (light + dark). Namespaced: installing vizcn never repaints your app."
+      "description": "Structural --vz-* tokens (light + dark + terminal). Namespaced: installing vizcn never repaints your app."
     },
     {
       "name": "palette",
