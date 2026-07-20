@@ -43,7 +43,8 @@ Then: `npx shadcn@latest add @vizcn/dune-flow`.
 - Demos (`<name>.demo.tsx` in the repo) are deterministic reference usage —
   copy their shape.
 - Dark: tokens flip with your app's `.dark` class; use `.vz-terminal` for the
-  terminal register. Neither requires per-form work.
+  terminal register or `.vz-paper` for the print/editorial register. None
+  requires per-form work.
 
 ## Rules
 

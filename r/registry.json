@@ -7,7 +7,7 @@
       "name": "theme",
       "type": "registry:theme",
       "title": "vizcn theme tokens",
-      "description": "Structural --vz-* tokens (light + dark + terminal). Namespaced: installing vizcn never repaints your app."
+      "description": "Structural --vz-* tokens (core light/dark + terminal + paper). Namespaced: installing vizcn never repaints your app."
     },
     {
       "name": "palette",
@@ -56,6 +56,12 @@
       "type": "registry:component",
       "title": "Heat Strip",
       "description": "A year of weekly activity as one strip of thin bars — numbers row above (total / peak / current week), per-week hover tooltip, intensity doubled by opacity."
+    },
+    {
+      "name": "leaderboard-bars",
+      "type": "registry:component",
+      "title": "Leaderboard Bars",
+      "description": "Horizontal pass-rate bars with ±std whiskers, a gridded 0–100 axis, secondary metric columns, and an out-of-competition row below a hard rule."
     },
     {
       "name": "leaderboard-table",

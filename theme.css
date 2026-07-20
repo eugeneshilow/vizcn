@@ -11,10 +11,10 @@
  * depend on it via registryDependencies, so `npx shadcn add` injects them
  * automatically. Manual setup: copy this file into your global CSS.
  *
- * Dark tone: wrap a subtree in .vz-dark (mapped to the consumer's .dark by
- * the registry); .vz-terminal is a dense terminal-style dark register.
- * .vz-scene is a near-black hero stage. Swap values to re-skin every form
- * at once.
+ * Skins are visual registers: core (default), terminal, and paper. Dark is
+ * core's alternate polarity via .vz-dark (mapped to the consumer's .dark).
+ * Terminal is dark-only; paper is light-only. .vz-scene is a near-black hero
+ * stage. Swap values to re-skin every form at once.
  */
 :root {
   --vz-surface: #ffffff;
@@ -73,6 +73,26 @@
   --vz-mid: #ff7a1a;
   --vz-bad: #f87171;
   color-scheme: dark;
+}
+/* print/editorial register — paper */
+.vz-paper {
+  --vz-surface: #ffffff;
+  --vz-frame: #111111;   /* hard hairline frames — print rules */
+  --vz-grid: #e3e3e3;    /* internal rules + gridlines */
+  --vz-axis: #8a8a8a;
+  --vz-track: #f0f0f0;
+  --vz-ink: #111111;
+  --vz-text2: #3a3a3a;
+  --vz-text3: #5c5c5c;
+  --vz-muted: #8a8a8a;
+  --vz-muted2: #9c9c9c;
+  --vz-chip: #111111;
+  --vz-chip-ink: #ffffff;
+  --vz-ring: #ffffff;
+  --vz-hover: #f7f7f6;
+  --vz-good: #1a7f37;
+  --vz-mid: #b45309;
+  --vz-bad: #c41e1e;    /* reference red */
 }
 .vz-scene {
   background: #0a0a0a;

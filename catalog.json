@@ -63,6 +63,16 @@
       "props": "weeks: number[] (weekly counts, oldest first, newest last); color? (default var(--vz-good,#059669))"
     },
     {
+      "name": "leaderboard-bars",
+      "install": "https://vibecoding.tech/vizcn/r/leaderboard-bars.json",
+      "question": "Who clears the bar, with what spread, and at what cost?",
+      "family": "ranking",
+      "whenToUse": "Benchmark leaderboards where run-to-run spread (±std) and secondary costs (price/tokens/time) matter alongside the score; reference rows out of competition.",
+      "antiUse": "Single-metric rankings without spread or metric columns — use rank-bars; more than ~10 rows — use leaderboard-table.",
+      "client": false,
+      "props": "rows: {label, sub?, value, std?, valueLabel?, color?, metrics?, offside?, offsideTag?}[]; columns?; barLabel?; rowLabel?; max?; unit?; ticks?"
+    },
+    {
       "name": "leaderboard-table",
       "install": "https://vibecoding.tech/vizcn/r/leaderboard-table.json",
       "question": "Who leads on score, with what confidence spread, and what does that score cost?",
