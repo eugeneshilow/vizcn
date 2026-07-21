@@ -19,10 +19,10 @@ import { seriesColor } from '../../lib/palette'
 
 const MONO = 'ui-monospace, SFMono-Regular, monospace'
 const W = 920
-const AXIS_LEFT = 310
-const AXIS_RIGHT = 610
+const AXIS_LEFT = 250
+const AXIS_RIGHT = 670
 const PAD = { top: 50, bottom: 26 }
-const LABEL_GAP = 14
+const LABEL_GAP = 15
 
 export type RankSlopeItem = {
   label: string
@@ -148,26 +148,41 @@ export function RankSlope({
                 x2={AXIS_RIGHT}
                 y2={toY}
                 stroke={color}
-                strokeWidth="2"
-                strokeOpacity="0.9"
+                strokeWidth="1.75"
+                strokeOpacity="0.85"
+                strokeLinecap="round"
               />
-              <circle cx={AXIS_LEFT} cy={fromY} r="2.5" fill={color} />
-              <circle cx={AXIS_RIGHT} cy={toY} r="2.5" fill={color} />
+              <circle
+                cx={AXIS_LEFT}
+                cy={fromY}
+                r="3"
+                fill={color}
+                stroke="var(--vz-surface,#ffffff)"
+                strokeWidth="1.25"
+              />
+              <circle
+                cx={AXIS_RIGHT}
+                cy={toY}
+                r="3"
+                fill={color}
+                stroke="var(--vz-surface,#ffffff)"
+                strokeWidth="1.25"
+              />
               <line
                 x1={AXIS_LEFT - 7}
                 y1={fromLabelY}
                 x2={AXIS_LEFT - 1}
                 y2={fromY}
-                stroke={color}
-                strokeWidth="1"
+                stroke="var(--vz-muted2,#9c9c9c)"
+                strokeWidth="0.75"
               />
               <line
                 x1={AXIS_RIGHT + 1}
                 y1={toY}
                 x2={AXIS_RIGHT + 7}
                 y2={toLabelY}
-                stroke={color}
-                strokeWidth="1"
+                stroke="var(--vz-muted2,#9c9c9c)"
+                strokeWidth="0.75"
               />
               <text
                 x={AXIS_LEFT - 12}

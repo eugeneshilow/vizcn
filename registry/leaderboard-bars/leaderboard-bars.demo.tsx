@@ -13,7 +13,7 @@ export default function LeaderboardBarsDemo() {
           value: 78.7,
           std: 6.1,
           metrics: ['$3.12', '33k', '13'],
-          color: '#A8562F',
+          color: '#E8734A',
         },
         {
           label: 'Sonnet 5',
@@ -21,7 +21,7 @@ export default function LeaderboardBarsDemo() {
           value: 74.7,
           std: 2.3,
           metrics: ['$2.42', '29k', '13'],
-          color: '#A8562F',
+          color: '#E8734A',
         },
         {
           label: 'GPT-5.5',
@@ -29,7 +29,7 @@ export default function LeaderboardBarsDemo() {
           value: 66.7,
           std: 4.6,
           metrics: ['$2.34', '16k', '12'],
-          color: '#0F766E',
+          color: '#10A37F',
         },
         {
           label: 'Haiku 4.5',
@@ -37,7 +37,7 @@ export default function LeaderboardBarsDemo() {
           value: 53.3,
           std: 4.6,
           metrics: ['$0.57', '18k', '10'],
-          color: '#A8562F',
+          color: '#E8734A',
         },
         {
           label: 'Fable 5',

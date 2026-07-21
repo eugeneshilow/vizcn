@@ -10,19 +10,19 @@ export default function PairedBarsDemo() {
       groups={[
         {
           label: 'claude-opus-4.7',
-          color: '#A8562F',
+          color: '#E8734A',
           a: { label: 'mini-swe-agent', value: 50 },
           b: { label: 'Claude Code', value: 40 },
         },
         {
           label: 'gpt-5.5',
-          color: '#0F766E',
+          color: '#10A37F',
           a: { label: 'mini-swe-agent', value: 40 },
           b: { label: 'Codex CLI', value: 40 },
         },
         {
           label: 'gemini-3.1-pro',
-          color: '#2563EB',
+          color: '#4285F4',
           a: { label: 'mini-swe-agent', value: 40 },
           b: { label: 'Gemini CLI', value: 20 },
         },

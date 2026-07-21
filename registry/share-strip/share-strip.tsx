@@ -4,7 +4,7 @@ import { seriesColor } from '../../lib/palette'
  * ShareStrip — one compact 100% strip for flat part-to-whole composition.
  *
  * Answers "what makes up the whole, in one strip?" in 2 seconds: a single
- * hard-bordered band carries every proportion. Segments at least 9% wide get
+ * band of gap-separated segments carries every proportion. Segments at least 9% wide get
  * an internal label and value; the complete legend below preserves every
  * category, raw value, and rounded percent. Div-only, token-driven rendering
  * with serializable props and no client runtime.
@@ -47,7 +47,7 @@ export function ShareStrip({
         </p>
       ) : null}
       <div
-        className="flex h-7 overflow-hidden border border-[var(--vz-ink,#111111)]"
+        className="flex h-7 gap-[1.5px]"
         role="img"
         aria-label={positiveParts.map((part) => `${part.label} ${part.value}${unit}`).join(', ')}
       >
