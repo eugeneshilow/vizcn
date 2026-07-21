@@ -13,6 +13,16 @@
       "props": "models (id, label, vendor?, color?, hero? — hero color must be a 6-digit hex, tint is built by hex+alpha concat), groups (label + rows {bench, note?, values: (number|null)[], decimals?}), meta?, footnote?, decimals?=1, benchColLabel?='benchmark'"
     },
     {
+      "name": "bubble-field",
+      "install": "https://vibecoding.tech/vizcn/r/bubble-field.json",
+      "question": "How is the pool scattered across two axes?",
+      "family": "distribution",
+      "whenToUse": "Showing how a pool of entities spreads across two quantitative axes with size and category as secondary encodings.",
+      "antiUse": "Few points with runs per entity and an efficiency story — use frontier-board; exact value reading — use a table.",
+      "client": false,
+      "props": "points: {x, y, size, category, label?}[]; categories: {key, label, color?}[]; xLabel; yLabel; xLog?; yLog?; width?; height?"
+    },
+    {
       "name": "delta-bars",
       "install": "https://vibecoding.tech/vizcn/r/delta-bars.json",
       "question": "Who is ahead today, and by how much?",
@@ -83,6 +93,16 @@
       "props": "versions: {key, label, models: {id, color?, badge?, logoUrl?, runs: {variant?, score, std?, x}[]}[]}[] (same rail as frontier-board); columns: {key, label, prefix?, suffix?, decimals?}[]; meta?; footnote?; xMax?; scoreSuffix/scoreLabel/modelColLabel/bestLabel/allRunsLabel/modelsLabel/allLabel UI strings"
     },
     {
+      "name": "paired-bars",
+      "install": "https://vibecoding.tech/vizcn/r/paired-bars.json",
+      "question": "How do two measurements of the same subjects compare?",
+      "family": "comparison",
+      "whenToUse": "The same subjects measured two ways (two harnesses, two environments, two setups, plan vs fact) where per-subject deltas matter.",
+      "antiUse": "More than two measurements per subject — use a table or bench-matrix; two rivals over time — use delta-bars.",
+      "client": false,
+      "props": "groups: {label, color?, a: {label, value, valueLabel?}, b: {label, value, valueLabel?}}[]; max?; unit?; ticks?; barLabel?"
+    },
+    {
       "name": "rank-bars",
       "install": "https://vibecoding.tech/vizcn/r/rank-bars.json",
       "question": "Who leads this ranking, and by how much?",
@@ -91,6 +111,26 @@
       "antiUse": "Not for time series, part-to-whole composition, or more than ~10 rows — use a table or sparklines instead.",
       "client": true,
       "props": "items: {label, value, valueLabel?, sub?, highlight?, color?}[]; maxValue?; unit?; highlightColor? (default seriesColor(0))"
+    },
+    {
+      "name": "rank-slope",
+      "install": "https://vibecoding.tech/vizcn/r/rank-slope.json",
+      "question": "How does the ranking reorder between two contexts?",
+      "family": "ranking",
+      "whenToUse": "Re-ranking between exactly two contexts (two benchmarks, two dates, before/after) where crossings and spread change are the message.",
+      "antiUse": "More than two contexts — use lines; when only the gap per item matters — use dumbbell-range.",
+      "client": false,
+      "props": "left: string; right: string; items: {label, from, to, color?}[]; unit?='%'; height?"
+    },
+    {
+      "name": "share-strip",
+      "install": "https://vibecoding.tech/vizcn/r/share-strip.json",
+      "question": "What makes up the whole, in one strip?",
+      "family": "composition",
+      "whenToUse": "Flat part-to-whole composition of a handful of categories where the single-strip proportion is the message.",
+      "antiUse": "Hierarchies or many small categories — use treemap; comparing composition across subjects — use verdict-stack.",
+      "client": false,
+      "props": "parts: {label, value, color?}[]; title?; unit?"
     },
     {
       "name": "stacked-activity",
@@ -121,6 +161,16 @@
       "antiUse": "Not for many items (>8) or time series — use rank bars or lines instead.",
       "client": true,
       "props": "items: {label, value, valueLabel?, sub?, highlight?, color?}[]; height? (default 180); maxValue?; highlightColor? (default seriesColor(0))"
+    },
+    {
+      "name": "verdict-stack",
+      "install": "https://vibecoding.tech/vizcn/r/verdict-stack.json",
+      "question": "What do each subject's outcomes consist of?",
+      "family": "composition",
+      "whenToUse": "Comparing the composition of outcomes or verdicts across subjects with a shared taxonomy (failure modes, ticket categories).",
+      "antiUse": "Reading exact segment values (no common baseline) — use a table; time series — use stacked-activity.",
+      "client": true,
+      "props": "subjects: {label, n, counts: Record<string, number>}[]; taxonomy: {group: string, tags: {key, label, color?}[]}[]"
     }
   ]
 }
