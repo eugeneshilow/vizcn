@@ -5,20 +5,22 @@ export default function VerdictStackDemo() {
   return (
     <VerdictStack
       taxonomy={[
-        { group: 'PASS', tags: [{ key: 'legitimate', label: 'legitimate' }] },
+        // Verdict semantics over neutral palette: pass green, failures on a warm
+        // ramp, verifier artifacts grey, cheated ink-black.
+        { group: 'PASS', tags: [{ key: 'legitimate', label: 'legitimate', color: '#1a7f37' }] },
         {
           group: 'FAIL',
           tags: [
-            { key: 'missed_requirement', label: 'missed requirement' },
-            { key: 'wrong_logic', label: 'wrong logic' },
-            { key: 'regression', label: 'regression' },
+            { key: 'missed_requirement', label: 'missed requirement', color: '#b45309' },
+            { key: 'wrong_logic', label: 'wrong logic', color: '#c41e1e' },
+            { key: 'regression', label: 'regression', color: '#a8562f' },
           ],
         },
         {
           group: 'VERIFIER',
           tags: [
-            { key: 'test_mismatch', label: 'test mismatch' },
-            { key: 'cheated', label: 'cheated' },
+            { key: 'test_mismatch', label: 'test mismatch', color: '#8a8a8a' },
+            { key: 'cheated', label: 'cheated', color: '#111111' },
           ],
         },
       ]}

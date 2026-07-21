@@ -137,7 +137,7 @@ export function BubbleField({
         aria-label={`${xLabel} by ${yLabel} bubble field`}
       >
         {xScale.ticks.map((tick) => {
-          const x = xScale.position(tick)
+          const x = Number(xScale.position(tick).toFixed(2))
           return (
             <g key={`x-${tick}`}>
               <line
@@ -162,7 +162,7 @@ export function BubbleField({
           )
         })}
         {yScale.ticks.map((tick) => {
-          const y = yScale.position(tick)
+          const y = Number(yScale.position(tick).toFixed(2))
           return (
             <g key={`y-${tick}`}>
               <line
@@ -209,9 +209,9 @@ export function BubbleField({
           return (
             <circle
               key={`${point.label ?? point.category}-${point.x}-${point.y}-${index}`}
-              cx={xScale.position(point.x)}
-              cy={yScale.position(point.y)}
-              r={radius(point.size)}
+              cx={xScale.position(point.x).toFixed(2)}
+              cy={yScale.position(point.y).toFixed(2)}
+              r={radius(point.size).toFixed(2)}
               fill={color}
               fillOpacity="0.75"
               stroke={color}
