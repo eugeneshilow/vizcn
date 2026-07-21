@@ -25,13 +25,21 @@ Paste this prompt into it (also available as `npx vizcn prompt`):
 Add a data visualization to this project from the vizcn registry:
 
 1. Fetch https://vibecoding.tech/vizcn/catalog.json — every form declares the
-   question it answers, whenToUse, and antiUse.
+   question it answers, whenToUse, antiUse, and an `example` (reference
+   usage); the top-level `skins` lists the visual registers.
 2. Pick the form whose question matches what my data needs to answer.
    Respect antiUse. If no form fits, stop and ask — never invent a chart.
 3. Install: npx shadcn@latest add https://vibecoding.tech/vizcn/r/<name>.json
    (no shadcn in the project? run `npx shadcn@latest init -d` once,
    or copy the form file from the repo).
-4. Feed my real data via props — the demo data is fictional reference.
+4. Pick a skin from `skins`: core is the default; for another register
+   wrap the chart's subtree in its class (e.g. .vz-paper for print,
+   .vz-terminal for dark terminal). Skins are token packs — no per-form work.
+5. The install adds namespaced --vz-* tokens. The status trio
+   (--vz-good/mid/bad) and per-series colors are brand-neutral
+   placeholders — remap the trio and pass `color` props to match my brand.
+6. Feed my real data via props, following the form's `example` — the
+   demo data is fictional reference.
 ```
 
 To make the rule permanent, drop this into your project's `AGENTS.md`:
@@ -40,9 +48,11 @@ To make the rule permanent, drop this into your project's `AGENTS.md`:
 ## Data visualizations
 Never invent charts or add chart libraries. Use the vizcn registry:
 pick a form by the question it answers in
-https://vibecoding.tech/vizcn/catalog.json (respect each form's antiUse),
-install via `npx shadcn@latest add https://vibecoding.tech/vizcn/r/<name>.json`,
-wire real data via props.
+https://vibecoding.tech/vizcn/catalog.json (respect each form's antiUse,
+copy its `example`), install via
+`npx shadcn@latest add https://vibecoding.tech/vizcn/r/<name>.json`,
+apply a skin class from the catalog's `skins` if the surface calls for it,
+remap --vz-good/mid/bad to the brand palette, wire real data via props.
 ```
 
 Programmatic channel: add the namespace to `components.json` and any
@@ -78,7 +88,7 @@ via registry dependencies. Optional motion kit:
 | `dune-flow` | What made up the flow over time, and when were the waves? | time-series | When readers must read exact values off the chart — the B-spline deliberately does not pass through the data points (raw values live only in the tooltip). |
 | `frontier-board` | Which model delivers the most score per dollar (or token), and at what effort level? | ranking | Needs >=2 runs per model to draw frontier lines; single-point-per-model data reads better as rank-bars. |
 | `heat-strip` | Is this thing alive — how did its activity move over the last year? | time-series | Not for exact value reading or short ranges (<12 weeks) — use a column chart instead. |
-| `leaderboard-bars` | Who clears the bar, with what spread, and at what cost? | ranking | Single-metric rankings without spread or metric columns — use rank-bars; more than ~10 rows — use leaderboard-table. |
+| `leaderboard-bars` | Who clears the bar, with what spread, and at what cost? | ranking | Single-metric rankings without spread or metric columns — use rank-bars; past ~12 rows the board outgrows a screen and labels stop scanning — use leaderboard-table. |
 | `leaderboard-table` | Who leads on score, with what confidence spread, and what does that score cost? | ranking | Wide-figure genre (min-width ~700px) — not for narrow containers or mobile cards; for a single metric without spread or economy columns, rank-bars is lighter. |
 | `paired-bars` | How do two measurements of the same subjects compare? | comparison | More than two measurements per subject — use a table or bench-matrix; two rivals over time — use delta-bars. |
 | `rank-bars` | Who leads this ranking, and by how much? | ranking | Not for time series, part-to-whole composition, or more than ~10 rows — use a table or sparklines instead. |

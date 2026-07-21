@@ -1,5 +1,3 @@
-import { seriesColor } from '../../lib/palette'
-
 /**
  * LeaderboardBars — benchmark ranking bars with spread and economy columns.
  *
@@ -22,6 +20,9 @@ import { seriesColor } from '../../lib/palette'
 
 const MONO = 'ui-monospace, SFMono-Regular, monospace'
 const METRIC_WIDTHS = [72, 56, 48]
+// Color follows the entity: pass per-row `color` (vendor identity); the
+// default is a neutral track tone, never an index rainbow.
+const BAR_DEFAULT = 'var(--vz-axis,#d9d9d9)'
 
 export type LeaderboardBarRow = {
   /** primary row label: "Opus 4.8" */
@@ -34,7 +35,7 @@ export type LeaderboardBarRow = {
   std?: number
   /** formatted score; defaults to value with ±std when present */
   valueLabel?: string
-  /** bar fill; defaults to seriesColor(index among competition rows) */
+  /** bar fill — pass the entity's identity color; defaults to a neutral track tone */
   color?: string
   /** cells aligned with columns; missing values render as em dashes */
   metrics?: (string | null | undefined)[]
@@ -129,9 +130,7 @@ export function LeaderboardBars({
               className="absolute inset-y-[5px] left-0"
               style={{
                 width: `${pct(row.value)}%`,
-                backgroundColor: isOffside
-                  ? 'var(--vz-ink,#111111)'
-                  : (row.color ?? seriesColor(index)),
+                backgroundColor: isOffside ? 'var(--vz-ink,#111111)' : (row.color ?? BAR_DEFAULT),
               }}
             />
             {!isOffside && row.std != null ? (

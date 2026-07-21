@@ -113,6 +113,12 @@ for (const name of names.sort()) {
   const usesPalette = /from\s+["']\.\.\/\.\.\/lib\/palette["']/.test(content)
   // consumer-side import path (shadcn @/* alias)
   content = content.replace(/from\s+["']\.\.\/\.\.\/lib\/palette["']/g, 'from "@/lib/vizcn-palette"')
+  // golden example: the demo, re-pathed to the consumer-side import
+  // (agents learn from real usage, not from props prose)
+  const example = readFileSync(join(formsDir, name, `${name}.demo.tsx`), 'utf8').replace(
+    new RegExp(`from\\s+["']\\./${name}["']`, 'g'),
+    `from "@/components/vizcn/${name}"`,
+  )
   const deps = [`${BASE}/theme.json`]
   if (usesPalette) deps.push(`${BASE}/palette.json`)
   const item = {
@@ -138,8 +144,30 @@ for (const name of names.sort()) {
     antiUse: meta.antiUse,
     client: meta.client,
     props: meta.props,
+    example,
   })
 }
+
+// ---- skins: the visual-register dimension above theme polarity ----
+// Data lives in theme.css (scope classes); this block is the agent-facing
+// contract for it — keep the two in sync when adding a skin.
+const SKINS = [
+  {
+    key: 'core',
+    class: null,
+    note: 'default skin — light tokens on :root, dark polarity via .dark on the app root',
+  },
+  {
+    key: 'terminal',
+    class: '.vz-terminal',
+    note: 'dense terminal register (#111 surface, amber controls); dark-only — wrap the chart subtree',
+  },
+  {
+    key: 'paper',
+    class: '.vz-paper',
+    note: 'print/editorial register (white paper, hard ink rules); light-only — wrap the chart subtree',
+  },
+]
 
 // ---- root index + catalog ----
 writeFileSync(
@@ -150,7 +178,10 @@ writeFileSync(
     2,
   ),
 )
-writeFileSync(join(root, 'catalog.json'), JSON.stringify({ name: cfg.name, shelf: cfg.shelfUrl, forms: catalog }, null, 2))
+writeFileSync(
+  join(root, 'catalog.json'),
+  JSON.stringify({ name: cfg.name, shelf: cfg.shelfUrl, skins: SKINS, forms: catalog }, null, 2),
+)
 
 // ---- cli/shelf.json: URLs for the pointer CLI (npx vizcn) ----
 writeFileSync(
@@ -167,7 +198,9 @@ writeFileSync(
   `# ${cfg.name} — agent-first SVG viz registry
 
 Copy-paste SVG data-viz forms an AI coding agent assembles from a catalog. No chart libraries.
-${catalog.length} forms; each declares the question it answers, whenToUse, and antiUse.
+${catalog.length} forms; each declares the question it answers, whenToUse, antiUse, and an example (reference usage).
+Skins (visual register above light/dark): ${SKINS.map((s) => `${s.key}${s.class ? ` (wrap subtree in ${s.class})` : ' (default)'}`).join(' · ')}.
+Status tokens --vz-good/mid/bad are brand-neutral placeholders — remap them to your palette after install.
 Catalog (machine-readable): ${cfg.shelfUrl}/catalog.json
 Install: npx shadcn@latest add ${BASE}/<name>.json
 Or: npx ${cfg.name} add <name> (pointer CLI; \`npx ${cfg.name} prompt\` prints an agent-ready prompt)
