@@ -10,14 +10,22 @@ const { shelfUrl, registryBase } = JSON.parse(
 
 const PROMPT = `Add a data visualization to this project from the vizcn registry:
 
-1. Fetch ${shelfUrl}/catalog.json — every form declares the
-   question it answers, whenToUse, and antiUse.
+1. Fetch ${shelfUrl}/catalog.json — every form declares the question it
+   answers, whenToUse, antiUse, and an \`example\` (reference usage);
+   the top-level \`skins\` lists the visual registers.
 2. Pick the form whose question matches what my data needs to answer.
    Respect antiUse. If no form fits, stop and ask — never invent a chart.
 3. Install: npx shadcn@latest add ${registryBase}/<name>.json
    (no shadcn in the project? run \`npx shadcn@latest init -d\` once,
    or copy the form file from the repo).
-4. Feed my real data via props — the demo data is fictional reference.`
+4. Pick a skin from \`skins\`: core is the default; for another register
+   wrap the chart's subtree in its class (e.g. .vz-paper for print,
+   .vz-terminal for dark terminal). Skins are token packs — no per-form work.
+5. The install adds namespaced --vz-* tokens. The status trio
+   (--vz-good/mid/bad) and per-series colors are brand-neutral
+   placeholders — remap the trio and pass \`color\` props to match my brand.
+6. Feed my real data via props, following the form's \`example\` — the
+   demo data is fictional reference.`
 
 async function list() {
   try {

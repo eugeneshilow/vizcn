@@ -1,7 +1,9 @@
 # vizcn — agent-first SVG viz registry
 
 Copy-paste SVG data-viz forms an AI coding agent assembles from a catalog. No chart libraries.
-17 forms; each declares the question it answers, whenToUse, and antiUse.
+17 forms; each declares the question it answers, whenToUse, antiUse, and an example (reference usage).
+Skins (visual register above light/dark): core (default) · terminal (wrap subtree in .vz-terminal) · paper (wrap subtree in .vz-paper).
+Status tokens --vz-good/mid/bad are brand-neutral placeholders — remap them to your palette after install.
 Catalog (machine-readable): https://vibecoding.tech/vizcn/catalog.json
 Install: npx shadcn@latest add https://vibecoding.tech/vizcn/r/<name>.json
 Or: npx vizcn add <name> (pointer CLI; `npx vizcn prompt` prints an agent-ready prompt)
