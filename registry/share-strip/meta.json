@@ -1,0 +1,11 @@
+{
+  "name": "share-strip",
+  "title": "Share Strip",
+  "description": "One hard-bordered 100% strip with in-segment labels for larger parts and a complete value-and-percent legend.",
+  "question": "What makes up the whole, in one strip?",
+  "family": "composition",
+  "whenToUse": "Flat part-to-whole composition of a handful of categories where the single-strip proportion is the message.",
+  "antiUse": "Hierarchies or many small categories — use treemap; comparing composition across subjects — use verdict-stack.",
+  "client": false,
+  "props": "parts: {label, value, color?}[]; title?; unit?"
+}

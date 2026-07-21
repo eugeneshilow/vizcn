@@ -1,0 +1,11 @@
+{
+  "name": "bubble-field",
+  "title": "Bubble Field",
+  "description": "Two-axis scatter with optional log10 scales, square-root bubble sizing, categorical color, decade gridlines, and computed legend counts.",
+  "question": "How is the pool scattered across two axes?",
+  "family": "distribution",
+  "whenToUse": "Showing how a pool of entities spreads across two quantitative axes with size and category as secondary encodings.",
+  "antiUse": "Few points with runs per entity and an efficiency story — use frontier-board; exact value reading — use a table.",
+  "client": false,
+  "props": "points: {x, y, size, category, label?}[]; categories: {key, label, color?}[]; xLabel; yLabel; xLog?; yLog?; width?; height?"
+}

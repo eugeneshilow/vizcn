@@ -1,0 +1,11 @@
+{
+  "name": "paired-bars",
+  "title": "Paired Bars",
+  "description": "Grouped horizontal bars for exactly two measurements per subject, sharing one gridded scale and one entity hue.",
+  "question": "How do two measurements of the same subjects compare?",
+  "family": "comparison",
+  "whenToUse": "The same subjects measured two ways (two harnesses, two environments, two setups, plan vs fact) where per-subject deltas matter.",
+  "antiUse": "More than two measurements per subject — use a table or bench-matrix; two rivals over time — use delta-bars.",
+  "client": false,
+  "props": "groups: {label, color?, a: {label, value, valueLabel?}, b: {label, value, valueLabel?}}[]; max?; unit?; ticks?; barLabel?"
+}

@@ -42,7 +42,9 @@ Then: `npx shadcn@latest add @vizcn/dune-flow`.
   series (tiers/priorities) take the `RAMP`, heat scales take `HEAT`.
 - Demos (`<name>.demo.tsx` in the repo) are deterministic reference usage —
   copy their shape.
-- Dark: tokens flip with your app's `.dark` class; no per-form work.
+- Dark: tokens flip with your app's `.dark` class; use `.vz-terminal` for the
+  terminal register or `.vz-paper` for the print/editorial register. None
+  requires per-form work.
 
 ## Rules
 

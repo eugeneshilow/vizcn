@@ -1,0 +1,11 @@
+{
+  "name": "verdict-stack",
+  "title": "Verdict Stack",
+  "description": "Interactive 100%-normalized outcome stacks with a grouped taxonomy legend that highlights one verdict across all subjects.",
+  "question": "What do each subject's outcomes consist of?",
+  "family": "composition",
+  "whenToUse": "Comparing the composition of outcomes or verdicts across subjects with a shared taxonomy (failure modes, ticket categories).",
+  "antiUse": "Reading exact segment values (no common baseline) — use a table; time series — use stacked-activity.",
+  "client": true,
+  "props": "subjects: {label, n, counts: Record<string, number>}[]; taxonomy: {group: string, tags: {key, label, color?}[]}[]"
+}

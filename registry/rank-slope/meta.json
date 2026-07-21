@@ -1,0 +1,11 @@
+{
+  "name": "rank-slope",
+  "title": "Rank Slope",
+  "description": "Two-context slopegraph with a shared linear scale, per-item color, and deterministically de-collided endpoint labels.",
+  "question": "How does the ranking reorder between two contexts?",
+  "family": "ranking",
+  "whenToUse": "Re-ranking between exactly two contexts (two benchmarks, two dates, before/after) where crossings and spread change are the message.",
+  "antiUse": "More than two contexts — use lines; when only the gap per item matters — use dumbbell-range.",
+  "client": false,
+  "props": "left: string; right: string; items: {label, from, to, color?}[]; unit?='%'; height?"
+}

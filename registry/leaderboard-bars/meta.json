@@ -1,0 +1,11 @@
+{
+  "name": "leaderboard-bars",
+  "title": "Leaderboard Bars",
+  "description": "Horizontal pass-rate bars with ±std whiskers, a gridded 0–100 axis, secondary metric columns, and an out-of-competition row below a hard rule.",
+  "question": "Who clears the bar, with what spread, and at what cost?",
+  "family": "ranking",
+  "whenToUse": "Benchmark leaderboards where run-to-run spread (±std) and secondary costs (price/tokens/time) matter alongside the score; reference rows out of competition.",
+  "antiUse": "Single-metric rankings without spread or metric columns — use rank-bars; more than ~10 rows — use leaderboard-table.",
+  "client": false,
+  "props": "rows: {label, sub?, value, std?, valueLabel?, color?, metrics?, offside?, offsideTag?}[]; columns?; barLabel?; rowLabel?; max?; unit?; ticks?"
+}
