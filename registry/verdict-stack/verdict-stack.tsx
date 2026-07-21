@@ -59,7 +59,7 @@ export function VerdictStack({
               >
                 <p className="truncate text-[11.5px] font-semibold">{subject.label}</p>
                 <div
-                  className="flex h-[22px] overflow-hidden border border-[var(--vz-ink,#111111)]"
+                  className="flex h-[24px] gap-[1.5px]"
                   role="img"
                   aria-label={`${subject.label}: ${tags
                     .map((tag) => `${tag.label} ${Math.max(subject.counts[tag.key] ?? 0, 0)}`)
@@ -69,18 +69,28 @@ export function VerdictStack({
                     const count = Math.max(subject.counts[tag.key] ?? 0, 0)
                     const percent = total > 0 ? (count / total) * 100 : 0
                     const dimmed = selectedKey !== null && selectedKey !== tag.key
+                    const showLabel = percent >= 8
                     return (
                       <div
                         key={tag.key}
-                        className="h-full transition-opacity"
+                        className="flex h-full items-center justify-center overflow-hidden transition-opacity"
                         style={{
                           width: `${percent}%`,
-                          minWidth: count > 0 ? '1px' : undefined,
+                          minWidth: count > 0 ? '2px' : undefined,
                           backgroundColor: colors.get(tag.key),
-                          opacity: dimmed ? 0.25 : 1,
+                          opacity: dimmed ? 0.2 : 1,
                         }}
                         title={`${tag.label} · ${count} · ${Math.round(percent)}%`}
-                      />
+                      >
+                        {showLabel ? (
+                          <span
+                            className="text-[9px] font-semibold text-white"
+                            style={{ fontFamily: MONO }}
+                          >
+                            {Math.round(percent)}%
+                          </span>
+                        ) : null}
+                      </div>
                     )
                   })}
                 </div>
@@ -95,19 +105,19 @@ export function VerdictStack({
           })}
         </div>
 
-        <div className="mt-5 border-t border-[var(--vz-grid,#e3e3e3)] pt-4">
+        <div className="mt-5 space-y-1.5 border-t border-[var(--vz-grid,#e3e3e3)] pt-3">
           {taxonomy.map((group) => (
             <div
               key={group.group}
-              className="grid grid-cols-[72px_minmax(0,1fr)] items-start gap-3 border-b border-[var(--vz-grid,#e3e3e3)] py-2 last:border-b-0"
+              className="grid grid-cols-[72px_minmax(0,1fr)] items-baseline gap-3"
             >
               <p
-                className="pt-[5px] text-[9px] uppercase tracking-[0.1em] text-[var(--vz-muted,#8a8a8a)]"
+                className="text-[9px] uppercase tracking-[0.1em] text-[var(--vz-muted,#8a8a8a)]"
                 style={{ fontFamily: MONO }}
               >
                 {group.group}
               </p>
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-x-4 gap-y-1">
                 {group.tags.map((tag) => {
                   const active = selectedKey === tag.key
                   const dimmed = selectedKey !== null && !active
@@ -117,8 +127,12 @@ export function VerdictStack({
                       type="button"
                       aria-pressed={active}
                       onClick={() => setSelectedKey(active ? null : tag.key)}
-                      className="flex items-center gap-1.5 border border-[var(--vz-grid,#e3e3e3)] px-2 py-1 text-[9.5px] text-[var(--vz-text3,#5c5c5c)] transition-[border-color,opacity] hover:border-[var(--vz-ink,#111111)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--vz-ink,#111111)]"
-                      style={{ fontFamily: MONO, opacity: dimmed ? 0.45 : 1 }}
+                      className={`flex items-center gap-1.5 text-[9.5px] transition-opacity hover:text-[var(--vz-ink,#111111)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--vz-ink,#111111)] ${
+                        active
+                          ? 'font-semibold text-[var(--vz-ink,#111111)] underline underline-offset-2'
+                          : 'text-[var(--vz-text3,#5c5c5c)]'
+                      }`}
+                      style={{ fontFamily: MONO, opacity: dimmed ? 0.4 : 1 }}
                     >
                       <span
                         aria-hidden
