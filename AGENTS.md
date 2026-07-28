@@ -1,5 +1,11 @@
 # AGENTS.md — how to use vizcn as a coding agent
 
+> **Fleet canon (private perimeter law) — read first:**
+> `~/Dropbox/5-code/hq/hq/AGENTS.md` — git-flow, quality gates, REPORT
+> format. On conflict, the fleet canon wins. (Perimeter-local pointer;
+> not applicable to external contributors.)
+
+
 You are choosing a data visualization. vizcn is a catalog of finished SVG
 forms; your job is **selection, not invention**.
 
