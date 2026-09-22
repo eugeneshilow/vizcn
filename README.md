@@ -76,6 +76,12 @@ vizcn never repaints your app) and the series palette come along automatically
 via registry dependencies. Optional motion kit:
 `npx shadcn@latest add https://vibecoding.tech/vizcn/r/motion.json`.
 
+Mirror on [21st.dev](https://21st.dev/@eugeneshilow/library/vizcn) — library
+`vizcn · by vibecoding.tech`, same forms, palette inlined per file (21st's
+publish flow takes one component file + one demo each):
+`npx @21st-dev/cli add @eugeneshilow/<name>`. The canonical registry with
+tokens, skins and the machine-readable catalog stays on the shelf above.
+
 ## Catalog
 
 <!-- catalog:start -->
@@ -121,6 +127,12 @@ copy `theme.css` into global CSS; its source-level standard-dark selector is
 Curated static snapshot: copy-paste, no runtime dependency, nothing to
 upgrade. Issues are open for bug reports on the forms; PRs may lag — this
 registry is a byproduct of a production system, not a product team.
+
+21st.dev mirror: `pnpm 21st:build` writes self-contained pairs to `dist/21st/`
+(gitignored), `pnpm 21st:publish [name ...]` pushes them into the library
+(`npx @21st-dev/cli login` once; a revision of an already published form
+needs `TWENTYFIRST_PUBLISH_ARGS="--component component:<id>"`, ids via
+`npx @21st-dev/cli components --json`).
 
 ## Author
 
