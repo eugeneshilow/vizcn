@@ -82,6 +82,10 @@ publish flow takes one component file + one demo each):
 `npx @21st-dev/cli add @eugeneshilow/<name>`. The canonical registry with
 tokens, skins and the machine-readable catalog stays on the shelf above.
 
+uiverse.io (HTML + CSS only): the dune-flow hero as a static card —
+[uiverse.io/eugeneshilow/green-bear-100](https://uiverse.io/eugeneshilow/green-bear-100),
+source in [`showcase/uiverse/`](showcase/uiverse/README.md).
+
 ## Catalog
 
 <!-- catalog:start -->
