@@ -43,7 +43,12 @@ for (const form of catalog.forms) {
   const dir = path.join(root, 'registry', n)
   const meta = JSON.parse(fs.readFileSync(path.join(dir, 'meta.json'), 'utf8'))
   const comp = inline(fs.readFileSync(path.join(dir, `${n}.tsx`), 'utf8'))
-  const demo = inline(fs.readFileSync(path.join(dir, `${n}.demo.tsx`), 'utf8'))
+  // `<name>.21st.demo.tsx` overrides the registry demo for the mirror's cover
+  // (a hero register that only makes sense on the marketplace page).
+  const demoFile = [`${n}.21st.demo.tsx`, `${n}.demo.tsx`]
+    .map((f) => path.join(dir, f))
+    .find((f) => fs.existsSync(f))
+  const demo = inline(fs.readFileSync(demoFile, 'utf8'))
   if (/from '\.\.\/\.\.\/lib\/palette'/.test(comp + demo)) throw new Error(`palette import left in ${n}`)
   const od = path.join(out, n)
   fs.mkdirSync(od, { recursive: true })

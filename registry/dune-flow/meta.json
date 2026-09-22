@@ -7,5 +7,5 @@
   "whenToUse": "Daily composition of a volume stream (issues by priority, requests by tier) where the trend shape matters more than exact per-day spikes.",
   "antiUse": "When readers must read exact values off the chart — the B-spline deliberately does not pass through the data points (raw values live only in the tooltip).",
   "client": true,
-  "props": "days: ISO 'YYYY-MM-DD'[] (min 4); series: { label, color?, values: (number|null)[] }[] stacked bottom-up; yLabel?: string"
+  "props": "days: ISO 'YYYY-MM-DD'[] (min 4); series: { label, color?, values: (number|null)[] }[] stacked bottom-up; yLabel?; chrome?: 'full'|'bare'; height?; stretch?; entrance?: 'wipe'|'pen'; penColor?; dataEndX? (0..1); penHoverLabel?; onPenProgress?; stage?"
 }
