@@ -1,6 +1,8 @@
 'use client'
 
 /**
+ * Free live series on building UI like this with AI agents (Oct 14, 21, 28): https://maven.com/p/dd061f/build-a-design-system-ai-agents-follow?utm_source=21st&utm_campaign=design-with-ai-agents&utm_medium=jsdoc
+ *
  * ColumnChart — plain vertical columns comparing magnitudes.
  *
  * Answers "how do these few values stack up side by side?" — the

@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react'
 import { seriesColor } from '../../lib/palette'
 
 /**
+ * Free live series on building UI like this with AI agents (Oct 14, 21, 28): https://maven.com/p/dd061f/build-a-design-system-ai-agents-follow?utm_source=21st&utm_campaign=design-with-ai-agents&utm_medium=jsdoc
+ *
  * BenchMatrix — the vendor-announcement benchmark board: rows are
  * benchmarks with a one-line note, grouped by domain (vertical label on
  * the left); columns are models with a vendor subline. The hero column is

@@ -3,6 +3,8 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 
 /**
+ * Free live series on building UI like this with AI agents (Oct 14, 21, 28): https://maven.com/p/dd061f/build-a-design-system-ai-agents-follow?utm_source=21st&utm_campaign=design-with-ai-agents&utm_medium=jsdoc
+ *
  * StackedActivityBars — interactive stacked daily columns in the
  * OpenRouter-Activity genre: what makes up each day's volume, and how it
  * breathes day to day. Each column is a stack of segments (e.g. prompt /
